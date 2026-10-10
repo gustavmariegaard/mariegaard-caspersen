@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script>document.documentElement.classList.add("js");</script>
 
 <style>
@@ -257,13 +256,7 @@
   address { font-style: normal; margin: 0 0 1.25rem; font-size: 1.1rem; }
   address strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 2rem; line-height: 1.1; color: var(--fjord); margin-bottom: .2rem; }
   .map { margin-top: 3.5rem; border-radius: 22px; overflow: hidden; border: 1px solid #d9cfb4; background: var(--paper); }
-  #map { width: 100%; height: 420px; background: #e4e9e1; z-index: 0; }
-  .map-fallback { height: 100%; display: grid; place-content: center; justify-items: center; gap: .4rem; text-align: center; padding: 1.5rem; color: var(--ink-soft); }
-  .map-fallback p { margin: 0; }
-  .pin { width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--fjord); border: 3px solid var(--gold); box-shadow: 0 3px 8px rgba(0,0,0,.35); }
-  .pin span { display: block; transform: rotate(45deg); text-align: center; line-height: 24px; font-weight: 700; font-size: .85rem; color: var(--gold); }
-  .pin.park { background: var(--water); border-color: #fff; }
-  .pin.park span { color: #fff; }
+  .map-frame { display: block; width: 100%; height: 420px; border: 0; background: #e4e9e1; }
   .map-foot { padding: 1rem 1.25rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; align-items: center; font-size: .98rem; }
 
   /* Knapper */
@@ -371,8 +364,15 @@
   .rsvp .btn:hover { background: var(--paper); border-color: var(--paper); }
   .rsvp .btn[disabled] { opacity: .6; cursor: wait; }
 
-  .form-note { max-width: 640px; margin: 2rem 0 0; padding: 1.1rem 1.4rem; border: 1px solid rgba(231,194,106,.6); background: rgba(231,194,106,.08); border-radius: 16px; color: var(--mist); font-size: .98rem; }
-  .form-note a { color: var(--gold); }
+  .guests legend { margin-bottom: .2rem; }
+  .guests .hint { margin: 0 0 .8rem; }
+  .guest-row { display: flex; gap: .6rem; align-items: center; margin-bottom: .6rem; }
+  .guest-row input { flex: 1; min-width: 0; }
+  .guest-row .rm { flex: none; }
+  .rsvp .linklike { color: var(--gold); }
+  .rsvp .linklike:hover { color: var(--paper); }
+  .stay-note { margin: .4rem 0 0; padding: .9rem 1.1rem; border: 1px solid rgba(231,194,106,.6); background: rgba(231,194,106,.08); border-radius: 14px; color: var(--mist); font-size: .95rem; line-height: 1.55; }
+  .stay-note a { color: var(--gold); }
 
   .conf { position: fixed; top: -20px; z-index: 50; width: 10px; height: 14px; border-radius: 3px 8px 3px 8px; pointer-events: none; animation: fall 2.6s ease-in forwards; }
   @keyframes fall { to { transform: translateY(110vh) rotate(540deg); opacity: .9; } }
@@ -392,7 +392,7 @@
     .count div { min-width: 3.1rem; }
     main > section { padding-left: 1.15rem; padding-right: 1.15rem; }
     .lede { font-size: 1.1rem; margin-bottom: 2rem; }
-    #map { height: 320px; }
+    .map-frame { height: 320px; }
     .photo { box-shadow: 10px 10px 0 var(--sage); margin-right: 10px; margin-bottom: 10px; }
     .ticket .t-big { font-size: 2.9rem; }
     .code { font-size: 1.5rem; }
@@ -656,22 +656,23 @@
             9000 Aalborg
           </address>
           <p>Vielsen holdes ved vandet. Festen holdes i tipien, og hytterne til overnatning ligger lige ved siden af.</p>
-          <p class="small">Der er gratis parkering i nærheden. Vi markerer den på kortet, så du ikke behøver lede efter den.</p>
-          <p><a class="btn ghost ext" href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a></p>
+          <p class="small">Der er gratis parkering i nærheden af stedet.</p>
+          <p><a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a></p>
         </div>
       </div>
 
       <div class="map reveal">
-        <div id="map" role="region" aria-label="Kort over Tabu Catering, Skydebanevej 50, Aalborg">
-          <div class="map-fallback">
-            <p><strong>Skydebanevej 50, 9000 Aalborg</strong></p>
-            <p>Kortet kunne ikke indlæses. Brug knappen nedenfor i stedet.</p>
-            <a class="btn ext" href="https://www.google.com/maps/search/?api=1&query=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Åbn i Google Maps</a>
-          </div>
-        </div>
+        <!--
+          Parkering på kortet: Lav et eget kort på https://www.google.com/maps/d/ (Mine kort),
+          sæt en nål på stedet og en på parkeringspladsen, vælg Del > "Alle med linket",
+          og vælg derefter menuen med de tre prikker > "Integrer på mit websted".
+          Kopiér linket fra src="..." og erstat src herunder.
+        -->
+        <iframe class="map-frame" title="Google-kort over Tabu Catering, Skydebanevej 50, Aalborg" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=Skydebanevej%2050%2C%209000%20Aalborg&amp;z=16&amp;hl=da&amp;output=embed"></iframe>
         <div class="map-foot">
           <span>Skydebanevej 50, 9000 Aalborg</span>
-          <a class="ext" href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a>
         </div>
       </div>
     </div>
@@ -684,7 +685,7 @@
           <h2>Overnatning</h2>
           <p class="lede" style="margin-bottom:1rem">Du kan sove i en af hytterne ved Tabu Catering. De ligger lige op ad tipien, hvor vi holder fest, så du kan gå direkte i seng.</p>
           <p>Brug vores rabatkode, når du booker. Hytterne er begrænsede, så book i god tid.</p>
-          <p><a href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer" class="btn ext">Book en hytte</a></p>
+          <p><a href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer" class="btn">Book en hytte</a></p>
         </div>
 
         <div class="ticket reveal" style="--d:.15s">
@@ -762,10 +763,12 @@
         </fieldset>
 
         <div id="attendFields" style="display:grid;gap:1.4rem">
-          <div class="field">
-            <label for="antal">Hvor mange kommer I? <span class="hint">Inklusive dig selv</span></label>
-            <input type="number" id="antal" name="Antal personer" min="1" max="10" value="1" inputmode="numeric">
-          </div>
+          <fieldset class="guests">
+            <legend>Hvem kommer?</legend>
+            <p class="hint">Skriv navnet på alle, der kommer, inklusive dig selv.</p>
+            <div id="guestList"></div>
+            <button type="button" class="linklike" id="addGuest">+ Tilføj en person</button>
+          </fieldset>
 
           <div class="field">
             <label for="overnat">Overnatter I?</label>
@@ -774,6 +777,7 @@
               <option>Nej, vi tager hjem</option>
               <option>Det ved vi ikke endnu</option>
             </select>
+            <p class="stay-note"><strong>Husk at booke din hytte selv.</strong> Vi spørger kun om overnatning, så vi har overblik over morgenmaden dagen efter. Du kan <a href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer">booke her</a> og bruge rabatkoden under <a href="#overnatning">overnatning</a>.</p>
           </div>
 
           <div class="field">
@@ -790,8 +794,6 @@
         <button class="btn" type="submit" id="sendBtn">Send tilmelding</button>
         <p class="status" id="status" role="status" aria-live="polite"></p>
       </form>
-
-      <p class="form-note reveal"><strong>Husk at booke din hytte selv.</strong> Vi spørger kun om overnatning, så vi har overblik over morgenmaden dagen efter. Du kan <a class="ext" href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer">booke her</a> og bruge rabatkoden under <a href="#overnatning">overnatning</a>.</p>
     </div>
   </section>
 
@@ -802,7 +804,6 @@
   <p>24. juli 2027</p>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 /* =====================================================
    INDSTILLINGER – ret her
@@ -954,51 +955,6 @@ document.getElementById("copyBtn").addEventListener("click", async () => {
 });
 
 /* =====================================================
-   Links der åbner i ny fane
-   ===================================================== */
-document.addEventListener("click", e => {
-  const a = e.target.closest("a.ext");
-  if (!a) return;
-  e.preventDefault();
-  const w = window.open(a.href, "_blank", "noopener,noreferrer");
-  if (!w) window.location.href = a.href;   // hvis pop-ups er blokeret
-});
-
-/* =====================================================
-   Kort (OpenStreetMap)
-   Adressen slås op automatisk. Tilføj parkeringspladsen herunder.
-   ===================================================== */
-// Parkering: højreklik (eller hold fingeren nede) på pladsen i Google Maps,
-// kopiér de to tal og sæt dem ind her. Lad stå som null, indtil I kender dem.
-const PARKING = null;   // fx { lat: 57.0123, lng: 9.9012, label: "Gratis parkering" }
-
-(function map() {
-  const el = document.getElementById("map");
-  if (typeof L === "undefined") return;                      // biblioteket blev ikke hentet: fallback vises
-  fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent("Skydebanevej 50, 9000 Aalborg"))
-    .then(r => r.json())
-    .then(res => {
-      if (!res.length) throw new Error("ingen adresse");
-      const venue = [parseFloat(res[0].lat), parseFloat(res[0].lon)];
-      el.innerHTML = "";
-      const m = L.map(el, { scrollWheelZoom: false, dragging: !L.Browser.mobile, tap: false }).setView(venue, 16);
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
-      }).addTo(m);
-      const icon = (cls, txt) => L.divIcon({ className: "", html: `<div class="pin ${cls}"><span>${txt}</span></div>`, iconSize: [30, 30], iconAnchor: [15, 30] });
-      L.marker(venue, { icon: icon("", "♥") }).addTo(m).bindPopup("<strong>Tabu Catering</strong><br>Her holder vi bryllup");
-      if (PARKING) {
-        const pk = [PARKING.lat, PARKING.lng];
-        L.marker(pk, { icon: icon("park", "P") }).addTo(m).bindPopup(PARKING.label || "Gratis parkering");
-        m.fitBounds([venue, pk], { padding: [50, 50], maxZoom: 17 });
-      }
-      setTimeout(() => m.invalidateSize(), 300);
-    })
-    .catch(() => { /* fallback-boksen bliver stående */ });
-})();
-
-/* =====================================================
    Bordplan
    ===================================================== */
 (function renderTables() {
@@ -1066,10 +1022,52 @@ const statusEl = document.getElementById("status");
 const sendBtn = document.getElementById("sendBtn");
 const attend = document.getElementById("attendFields");
 
+/* Gæsteliste: ét navnefelt pr. person */
+const guestList = document.getElementById("guestList");
+const MAX_GUESTS = 10;
+let firstGuestEdited = false;
+
+function renumberGuests() {
+  [...guestList.querySelectorAll(".guest-row")].forEach((row, i) => {
+    row.querySelector("input").setAttribute("aria-label", `Navn på person ${i + 1}`);
+  });
+  document.getElementById("addGuest").hidden = guestList.children.length >= MAX_GUESTS;
+}
+function addGuest(value = "") {
+  const first = guestList.children.length === 0;
+  const row = document.createElement("div");
+  row.className = "guest-row";
+  row.innerHTML = `<input type="text" autocomplete="off" placeholder="Fornavn og efternavn">` +
+                  (first ? "" : `<button type="button" class="linklike rm">Fjern</button>`);
+  const input = row.querySelector("input");
+  input.value = value;
+  if (first) input.addEventListener("input", () => { firstGuestEdited = true; });
+  guestList.appendChild(row);
+  renumberGuests();
+  return input;
+}
+function resetGuests() {
+  guestList.innerHTML = "";
+  firstGuestEdited = false;
+  addGuest();
+}
+document.getElementById("addGuest").addEventListener("click", () => addGuest().focus());
+guestList.addEventListener("click", e => {
+  const rm = e.target.closest(".rm");
+  if (!rm) return;
+  rm.closest(".guest-row").remove();
+  renumberGuests();
+});
+// Første navn følger "Dit navn", indtil man selv retter det
+document.getElementById("navn").addEventListener("input", e => {
+  if (!firstGuestEdited) guestList.querySelector("input").value = e.target.value;
+});
+resetGuests();
+
 form.addEventListener("change", () => {
   const coming = form.elements["Kommer"].value === "Ja";
   attend.hidden = !coming;
-  attend.querySelectorAll("input,select,textarea").forEach(f => f.disabled = !coming);
+  attend.querySelectorAll("input,select,textarea,button").forEach(f => f.disabled = !coming);
 });
 
 function confetti() {
@@ -1094,14 +1092,28 @@ form.addEventListener("submit", async e => {
     form.elements["Navn"].focus();
     return;
   }
+  const coming = form.elements["Kommer"].value === "Ja";
+  const names = [...guestList.querySelectorAll("input")].map(i => i.value.trim()).filter(Boolean);
+  if (coming && names.length === 0) {
+    statusEl.classList.add("err");
+    statusEl.textContent = "Skriv navnet på alle, der kommer.";
+    guestList.querySelector("input").focus();
+    return;
+  }
   if (RSVP.to.endsWith("example.com")) {
     statusEl.classList.add("err");
     statusEl.textContent = "Tilmeldingen er ikke sat op endnu. Kontakt os direkte.";
     return;
   }
 
-  const data = {};
-  new FormData(form).forEach((v, k) => { if (k !== "_honey") data[k] = v; });
+  const data = { "Navn": form.elements["Navn"].value.trim(), "Kommer": coming ? "Ja" : "Nej" };
+  if (coming) {
+    data["Antal personer"] = String(names.length);
+    data["Navne på dem, der kommer"] = names.join(", ");
+    data["Overnatning"] = form.elements["Overnatning"].value;
+    data["Allergier"] = form.elements["Allergier"].value.trim();
+  }
+  data["Besked"] = form.elements["Besked"].value.trim();
   sendBtn.disabled = true;
   statusEl.textContent = "Sender …";
 
@@ -1120,8 +1132,9 @@ form.addEventListener("submit", async e => {
     const out = await res.json();
     if (!res.ok || out.success === "false" || out.success === false) throw new Error(out.message || "Fejl");
     form.reset();
+    resetGuests();
     attend.hidden = false;
-    attend.querySelectorAll("input,select,textarea").forEach(f => f.disabled = false);
+    attend.querySelectorAll("input,select,textarea,button").forEach(f => f.disabled = false);
     statusEl.classList.add("ok");
     statusEl.textContent = "Tak for dit svar. Vi har fået det.";
     confetti();
