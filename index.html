@@ -1,1 +1,1115 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gustav & Camilla – 24. juli 2027</title>
+<meta name="description" content="Program, menu, bordplan, overnatning og tilmelding til vores bryllup ved Limfjorden den 24. juli 2027.">
+<meta name="theme-color" content="#14302f">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script>document.documentElement.classList.add("js");</script>
 
+<style>
+  :root {
+    /* Limfjorden en sommeraften: dyb fjord, siv, tåge, aftensol */
+    --night: #14302f;
+    --fjord: #1c3836;
+    --fjord-soft: #2b4e4b;
+    --teal: #3b6a66;
+    --reed: #5f7a61;
+    --sage: #a9bfa4;
+    --mist: #edf1ec;
+    --paper: #fbfbf6;
+    --water: #6c9ca8;
+    --birch: #d9cfb8;
+    --gold: #e7c26a;
+    --gold-deep: #8a6a1d;
+    --ink: #1e2b2a;
+    --ink-soft: #4b5c5a;
+    --line: #cfd9d0;
+
+    --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --lap: 44px; /* hvor meget hver sektion overlapper den forrige */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(60px + var(--safe-top)); -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.65;
+    color: var(--ink); background: var(--night); overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--fjord-soft); text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--water); outline-offset: 3px; border-radius: 4px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  [hidden] { display: none !important; }
+
+  /* ---------- Navigation ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(20,48,47,.88); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    padding-top: var(--safe-top); border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .nav ul {
+    list-style: none; margin: 0 auto; padding: 0 1rem; max-width: 1100px; height: 56px;
+    display: flex; gap: .25rem; align-items: center; justify-content: center;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .nav ul::-webkit-scrollbar { display: none; }
+  .nav a {
+    display: block; padding: .5rem .85rem; white-space: nowrap; color: var(--sage);
+    text-decoration: none; font-size: .95rem; font-weight: 500; border-radius: 999px;
+    transition: color .2s, background .2s;
+  }
+  .nav a:hover { color: var(--paper); background: rgba(255,255,255,.1); }
+  @media (max-width: 760px) { .nav ul { justify-content: flex-start; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden; isolation: isolate;
+    min-height: calc(100svh - 56px);
+    display: grid; place-items: center; text-align: center;
+    padding: 4.5rem 1.5rem clamp(9rem, 22vw, 15rem);
+    color: var(--mist);
+    background: linear-gradient(180deg, #0f2625 0%, var(--night) 28%, var(--fjord) 62%, #34605c 100%);
+  }
+  .stars { position: absolute; inset: 0 0 35% 0; z-index: -1; pointer-events: none; }
+  .star { position: absolute; border-radius: 50%; background: #fff; opacity: .15; animation: twinkle 4s ease-in-out infinite; }
+  @keyframes twinkle { 50% { opacity: .85; } }
+
+  .sun {
+    position: absolute; left: 50%; bottom: clamp(-170px, -12vw, -60px); z-index: -1;
+    width: min(760px, 120vw); aspect-ratio: 1; translate: -50% 0; pointer-events: none;
+    background: radial-gradient(circle, rgba(244,200,110,.62) 0%, rgba(231,194,106,.34) 26%, rgba(231,194,106,0) 66%);
+    animation: breathe 9s ease-in-out infinite alternate;
+  }
+  @keyframes breathe { from { scale: .95; opacity: .85; } to { scale: 1.04; opacity: 1; } }
+
+  .hero-inner { position: relative; max-width: 940px; }
+  .date { margin: 0 0 1.25rem; font-size: 1.05rem; letter-spacing: .03em; color: var(--sage); animation: rise .9s .05s both; }
+
+  .hero h1 {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0 .2em;
+    margin: 0; font-family: var(--serif); font-weight: 400;
+    font-size: clamp(3.6rem, 14vw, 9.5rem); line-height: .98; letter-spacing: -.015em; color: var(--paper);
+  }
+  .hero h1 span { animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; }
+  .hero h1 span:nth-child(2) { animation-delay: .12s; }
+  .hero h1 span:nth-child(3) { animation-delay: .24s; }
+  .hero h1 .amp { font-style: italic; color: var(--gold); }
+  @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+
+  /* Navne der skifter ord for ord */
+  .names { margin: 1.6rem 0 0; display: grid; gap: .1rem; }
+  .name-line {
+    margin: 0; display: flex; flex-wrap: wrap; justify-content: center;
+    font-family: var(--serif); font-size: clamp(1.35rem, 4.2vw, 2.1rem); line-height: 1.3; color: var(--sage);
+  }
+  .w {
+    display: block; overflow: hidden; white-space: nowrap; padding-bottom: .12em;
+    max-width: 9em; margin-right: .28em; opacity: 1;
+    transition: max-width .8s cubic-bezier(.6,0,.2,1), margin .8s cubic-bezier(.6,0,.2,1), opacity .6s, color .6s;
+  }
+  .w.off { max-width: 0; margin-right: 0; opacity: 0; }
+
+  .switch-wrap { margin-top: 2rem; display: grid; justify-items: center; gap: .8rem; }
+  .switch {
+    display: inline-flex; align-items: center; gap: .9rem;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.25);
+    color: var(--sage); font: inherit; font-weight: 500; font-size: .98rem;
+    padding: .6rem 1.2rem; border-radius: 999px; cursor: pointer; transition: background .2s, border-color .2s;
+  }
+  .switch:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.45); }
+  .switch .opt { transition: color .25s; }
+  .switch[aria-checked="false"] .opt-single, .switch[aria-checked="true"] .opt-married { color: var(--paper); }
+  .switch .track { position: relative; width: 48px; height: 27px; border-radius: 999px; background: rgba(255,255,255,.2); }
+  .switch .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 21px; height: 21px; border-radius: 50%;
+    background: var(--gold); transition: transform .35s cubic-bezier(.3,1.5,.5,1);
+  }
+  .switch[aria-checked="true"] .track::after { transform: translateX(21px); }
+  .caption { margin: 0; max-width: 36ch; font-size: .95rem; color: var(--sage); min-height: 3em; }
+
+  .count { margin: 2.25rem auto 0; display: flex; justify-content: center; gap: clamp(.9rem, 4vw, 2rem); }
+  .count div { min-width: 3.6rem; }
+  .count b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 7vw, 3.2rem); line-height: 1; color: var(--paper); font-variant-numeric: tabular-nums; }
+  .count span { font-size: .85rem; color: var(--sage); }
+  .count-label { margin: .8rem 0 0; font-size: .95rem; color: var(--sage); }
+
+  .waves { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: clamp(110px, 17vw, 250px); display: block; z-index: 1; }
+  .waves path { animation: drift 16s ease-in-out infinite alternate; }
+  .waves path:nth-child(2) { animation-duration: 21s; animation-direction: alternate-reverse; }
+  .waves path:nth-child(3) { animation-duration: 26s; }
+  @keyframes drift { from { transform: translateX(-34px); } to { transform: translateX(34px); } }
+
+  .reeds { position: absolute; bottom: 0; z-index: 2; width: clamp(110px, 19vw, 250px); height: auto; transform-origin: 50% 100%; animation: sway 7s ease-in-out infinite alternate; pointer-events: none; }
+  .reeds.left { left: 1%; }
+  .reeds.right { right: 1%; scale: -1 1; animation-delay: -3s; }
+  @keyframes sway { from { rotate: -1.6deg; } to { rotate: 1.6deg; } }
+
+  /* ---------- Sektioner ---------- */
+  main > section { position: relative; padding: clamp(3.5rem, 8vw, 6rem) 1.5rem; }
+  main > section + section {
+    border-radius: var(--lap) var(--lap) 0 0; margin-top: calc(var(--lap) * -1);
+    padding-top: calc(clamp(3.5rem, 8vw, 6rem) + var(--lap));
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  .wrap.wide { max-width: 1100px; }
+  h2 {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(2.4rem, 6vw, 3.7rem);
+    line-height: 1.02; margin: 0 0 1rem; color: var(--fjord); letter-spacing: -.01em;
+  }
+  h2::after {
+    content: ""; display: block; width: 90px; height: 10px; margin-top: .7rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='10'%3E%3Cpath d='M0 5 Q7.5 0 15 5 T30 5' fill='none' stroke='%23b98a2e' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x;
+  }
+  h3 { font-size: 1.1rem; margin: 0 0 .3rem; color: var(--fjord); }
+  .lede { font-size: 1.2rem; color: var(--ink-soft); max-width: 60ch; margin: 0 0 2.5rem; }
+  .small { font-size: .95rem; color: var(--ink-soft); }
+
+  .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* Velkomst */
+  .s-welcome { background: var(--mist); padding-bottom: calc(clamp(3.5rem, 8vw, 6rem) + var(--lap)); overflow: hidden; }
+  .s-welcome h2 { max-width: 16ch; font-size: clamp(2.6rem, 7.5vw, 4.8rem); line-height: 1; }
+  .s-welcome h2::after { display: none; }
+  .s-welcome .intro { max-width: 54ch; font-size: 1.15rem; color: var(--ink-soft); margin: 0 0 3rem; }
+
+  .facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 800px) { .facts { grid-template-columns: repeat(3, 1fr); gap: 0; } .facts li + li { border-left: 1px solid var(--line); padding-left: 2rem; } .facts li { padding-right: 1.5rem; } }
+  .facts li { display: flex; gap: 1rem; align-items: flex-start; }
+  .ico { flex: none; width: 50px; height: 50px; border-radius: 50%; background: #d6e4e3; color: var(--fjord); display: grid; place-items: center; }
+  .ico svg, .node svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .facts b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.45rem; line-height: 1.2; color: var(--fjord); }
+  .facts span { color: var(--ink-soft); font-size: .98rem; }
+
+
+  /* Program */
+  .s-program { background: var(--paper); }
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 4.4rem 46px 1fr; gap: 1.1rem; align-items: start; position: relative; padding-bottom: 2.2rem; }
+  .timeline li::after { content: ""; position: absolute; left: calc(4.4rem + 1.1rem + 22px); top: 50px; bottom: 4px; width: 2px; background: var(--line); }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li:last-child::after { display: none; }
+  .timeline time { font-family: var(--serif); font-size: 1.75rem; line-height: 1.1; color: var(--fjord); text-align: right; padding-top: .55rem; }
+  .timeline .later time { font-size: 1.25rem; padding-top: .7rem; color: var(--ink-soft); }
+  .node { width: 46px; height: 46px; border-radius: 50%; background: var(--fjord); color: var(--gold); display: grid; place-items: center; box-shadow: 0 0 0 5px var(--paper); position: relative; z-index: 1; }
+  .timeline p { margin: 0; color: var(--ink-soft); }
+  .timeline h3 { padding-top: .5rem; font-size: 1.2rem; }
+  @media (max-width: 520px) {
+    .timeline li { grid-template-columns: 3.3rem 40px 1fr; gap: .8rem; }
+    .timeline li::after { left: calc(3.3rem + .8rem + 19px); top: 44px; }
+    .node { width: 40px; height: 40px; }
+    .node svg { width: 20px; height: 20px; }
+    .timeline time { font-size: 1.4rem; }
+  }
+  .note { margin-top: 2.5rem; padding: 1rem 1.25rem; background: #eef2e6; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; font-size: .98rem; color: var(--ink-soft); }
+
+  /* Menu (mørk sektion) */
+  .s-menu { background: var(--fjord); color: var(--mist); }
+  .s-menu h2 { color: var(--paper); }
+  .s-menu .lede { color: var(--sage); }
+  .s-menu h2::after, .rsvp h2::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='10'%3E%3Cpath d='M0 5 Q7.5 0 15 5 T30 5' fill='none' stroke='%23e7c26a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+  .menu-grid { display: grid; gap: 3rem 3.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .course { position: relative; padding-top: 1rem; }
+  .course::before {
+    content: attr(data-n); position: absolute; top: -1.2rem; left: -.4rem; z-index: 0;
+    font-family: var(--serif); font-size: 9rem; line-height: 1; color: rgba(231,194,106,.14); pointer-events: none;
+  }
+  .course > * { position: relative; z-index: 1; }
+  .course .heat { margin: 0; color: var(--gold); font-weight: 600; font-size: .95rem; }
+  .course h3 { font-family: var(--serif); font-weight: 400; font-size: 2.1rem; line-height: 1.1; color: var(--paper); margin: .1rem 0 1rem; }
+  .course ul { list-style: none; margin: 0; padding: 0; }
+  .course li { padding: .6rem 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .course li:last-child { border-bottom: 1px solid rgba(255,255,255,.15); }
+  .menu-foot { margin-top: 3.5rem; display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .menu-foot h3 { color: var(--gold); font-weight: 600; font-size: 1rem; }
+  .menu-foot p { margin: 0; color: var(--mist); }
+  .allergy { grid-column: 1 / -1; border: 1px solid var(--gold); border-radius: 16px; padding: 1.2rem 1.5rem; background: rgba(231,194,106,.08); }
+  .allergy a { color: var(--gold); }
+
+  /* Sted */
+  .s-sted { background: #efe7d3; }
+  .place { display: grid; gap: 3rem; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .place { grid-template-columns: 1.05fr .95fr; align-items: center; } }
+  .photo {
+    position: relative; margin: 0 14px 14px 0; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden;
+    transform: rotate(-1.5deg); box-shadow: 14px 14px 0 var(--sage); background: #d7e3e3;
+  }
+  .photo img, .photo .ph-art { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo .ph-art, .photo .ph-cap { display: none; }
+  .photo .ph-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: .6rem 1rem; background: rgba(20,48,47,.6); color: var(--mist); font-size: .9rem; text-align: center; }
+  .photo.is-empty img { display: none; }
+  .photo.is-empty .ph-art { display: block; }
+  .photo.is-empty .ph-cap { display: block; }
+  address { font-style: normal; margin: 0 0 1.25rem; font-size: 1.1rem; }
+  address strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 2rem; line-height: 1.1; color: var(--fjord); margin-bottom: .2rem; }
+  .map { margin-top: 3.5rem; border-radius: 22px; overflow: hidden; border: 1px solid #d9cfb4; background: var(--paper); }
+  #map { width: 100%; height: 420px; background: #e4e9e1; z-index: 0; }
+  .map-fallback { height: 100%; display: grid; place-content: center; justify-items: center; gap: .4rem; text-align: center; padding: 1.5rem; color: var(--ink-soft); }
+  .map-fallback p { margin: 0; }
+  .pin { width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--fjord); border: 3px solid var(--gold); box-shadow: 0 3px 8px rgba(0,0,0,.35); }
+  .pin span { display: block; transform: rotate(45deg); text-align: center; line-height: 24px; font-weight: 700; font-size: .85rem; color: var(--gold); }
+  .pin.park { background: var(--water); border-color: #fff; }
+  .pin.park span { color: #fff; }
+  .map-foot { padding: 1rem 1.25rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; align-items: center; font-size: .98rem; }
+
+  /* Knapper */
+  .btn {
+    display: inline-block; font: inherit; font-weight: 600; font-size: 1rem; cursor: pointer;
+    padding: .85rem 1.6rem; border-radius: 999px; border: 2px solid var(--fjord);
+    background: var(--fjord); color: var(--paper); text-decoration: none;
+    transition: background .2s, color .2s, transform .15s;
+  }
+  .btn:hover { background: var(--fjord-soft); }
+  .btn:active { transform: scale(.97); }
+  .btn.ghost { background: transparent; color: var(--fjord); }
+  .btn.ghost:hover { background: var(--fjord); color: var(--paper); }
+
+  /* Overnatning */
+  .s-stay { background: #dfeae7; }
+  .stay { display: grid; gap: 3rem; grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 820px) { .stay { grid-template-columns: 1.1fr .9fr; } }
+  .ticket {
+    position: relative; text-align: center; padding: 2rem 1.5rem 1.8rem; color: var(--ink);
+    background: linear-gradient(160deg, #f6e6b6, #efd68d);
+    -webkit-mask: radial-gradient(circle 14px at 0 58%, #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 14px at 100% 58%, #0000 97%, #000) right / 51% 100% no-repeat;
+            mask: radial-gradient(circle 14px at 0 58%, #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 14px at 100% 58%, #0000 97%, #000) right / 51% 100% no-repeat;
+    border-radius: 20px; transform: rotate(1.2deg);
+  }
+  .ticket .t-small { margin: 0; font-size: .95rem; color: #6d5718; font-weight: 600; }
+  .ticket .t-big { margin: .1rem 0 1.1rem; font-family: var(--serif); font-size: 3.4rem; line-height: 1; color: var(--fjord); }
+  .ticket .cut { border: 0; border-top: 2px dashed rgba(109,87,24,.4); margin: 0 0 1.1rem; }
+  .code { display: inline-flex; align-items: center; gap: .8rem; background: var(--paper); border-radius: 12px; padding: .45rem .45rem .45rem 1.1rem; font-family: var(--serif); font-size: 1.8rem; letter-spacing: .06em; color: var(--fjord); }
+  .code #codeText { user-select: all; -webkit-user-select: all; }
+  .code button { font: inherit; font-size: .9rem; font-weight: 600; background: var(--fjord); color: var(--paper); border: 0; padding: .6rem .95rem; border-radius: 8px; cursor: pointer; }
+  .code button:hover { background: var(--fjord-soft); }
+  .ticket .msg { margin: .8rem 0 0; min-height: 1.5em; font-size: .92rem; color: #6d5718; }
+
+  /* Dresscode og ønsker */
+  .s-extra { background: #e9eede; }
+  .two { display: grid; gap: 3.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 800px) { .two { grid-template-columns: 1fr 1fr; } }
+  .nowhite { width: 84px; height: 84px; margin-bottom: 1.2rem; }
+  .wishes { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: .6rem; }
+  .wishes li { display: flex; align-items: center; gap: .9rem; padding: .75rem 1rem; background: var(--paper); border-radius: 14px; }
+  .wishes li:nth-child(even) { margin-left: 1.2rem; }
+  .wishes li::before { content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(231,194,106,.3); }
+
+  /* Bordplan */
+  .s-seat { background: var(--paper); }
+  .tables { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); align-items: start; }
+  .seat-tools { margin: -1rem 0 1.5rem; }
+  .linklike { background: none; border: 0; padding: .2rem 0; font: inherit; font-weight: 600; color: var(--fjord-soft); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; cursor: pointer; }
+  .linklike:hover { color: var(--fjord); text-decoration-thickness: 2.5px; }
+  .tbl .more { font-size: .95rem; }
+  .tl { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .4s ease, visibility 0s .4s; }
+  .tl.open { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+  .tl-inner { overflow: hidden; min-height: 0; }
+  .tl-inner ol { padding-top: .8rem; }
+  .tbl { text-align: center; background: #f1f4ec; border-radius: 26px; padding: 1.6rem 1rem 1.4rem; transition: background .3s, transform .3s; }
+  .tbl:hover { background: #e6edd9; transform: translateY(-3px); }
+  .tbl h3 { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; margin: 0; }
+  .tbl .sub { font-size: .9rem; color: var(--gold-deep); font-weight: 600; margin: 0 0 .75rem; min-height: 1.4em; }
+  .tbl-visual { position: relative; width: 190px; height: 190px; margin: 0 auto 1.1rem; }
+  .tbl-top {
+    position: absolute; inset: 26%; border-radius: 50%; background: #fff; border: 3px solid var(--gold);
+    display: grid; place-items: center; font-family: var(--serif); font-size: 1.7rem; color: var(--fjord);
+    box-shadow: inset 0 0 0 6px #f6efd9;
+  }
+  .seat {
+    position: absolute; width: 27px; height: 27px; border-radius: 50%; transform: translate(-50%, -50%);
+    display: grid; place-items: center; font-size: .75rem; font-weight: 700;
+    background: var(--reed); color: #fff; border: 2px solid #f1f4ec; transition: background .3s, scale .3s;
+  }
+  .tbl:hover .seat { background: var(--fjord); scale: 1.1; }
+  .tbl ol { list-style: none; margin: 0 auto; padding: 0; text-align: left; max-width: 230px; }
+  .tbl li { display: flex; gap: .6rem; font-size: .95rem; padding: .25rem 0; border-bottom: 1px solid #d9e2d2; }
+  .tbl li b { flex: none; width: 1.3rem; color: var(--reed); font-weight: 700; }
+  .tbl li.empty span { color: #8b9c99; }
+
+  /* Tilmelding */
+  .rsvp { background: var(--fjord); color: var(--mist); overflow: hidden; }
+  .rsvp h2 { color: var(--paper); }
+  .rsvp .lede { color: var(--sage); }
+  form { display: grid; gap: 1.4rem; max-width: 640px; position: relative; z-index: 1; }
+  .field { display: grid; gap: .45rem; }
+  label, legend { font-weight: 600; font-size: .98rem; color: var(--paper); }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  .hint { font-weight: 400; color: var(--sage); font-size: .9rem; }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%; font: inherit; color: var(--ink); background: var(--paper);
+    border: 2px solid transparent; border-radius: 12px; padding: .8rem 1rem;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  .radios { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .45rem; }
+  .radios label {
+    display: flex; align-items: center; gap: .6rem; cursor: pointer; font-weight: 500;
+    background: rgba(255,255,255,.08); border: 2px solid rgba(255,255,255,.2); padding: .75rem 1.1rem; border-radius: 12px; transition: border-color .2s, background .2s;
+  }
+  .radios input { accent-color: var(--gold); width: 1.1rem; height: 1.1rem; }
+  .radios label:has(input:checked) { border-color: var(--gold); background: rgba(231,194,106,.16); }
+  .trap { position: absolute; left: -9999px; }
+  .status { min-height: 1.5em; font-weight: 500; margin: 0; }
+  .status.ok { color: #c9ecc4; }
+  .status.err { color: #ffd0c4; }
+  .rsvp .btn { background: var(--gold); border-color: var(--gold); color: var(--night); justify-self: start; }
+  .rsvp .btn:hover { background: var(--paper); border-color: var(--paper); }
+  .rsvp .btn[disabled] { opacity: .6; cursor: wait; }
+
+  .form-note { max-width: 640px; margin: 2rem 0 0; padding: 1.1rem 1.4rem; border: 1px solid rgba(231,194,106,.6); background: rgba(231,194,106,.08); border-radius: 16px; color: var(--mist); font-size: .98rem; }
+  .form-note a { color: var(--gold); }
+
+  .conf { position: fixed; top: -20px; z-index: 50; width: 10px; height: 14px; border-radius: 3px 8px 3px 8px; pointer-events: none; animation: fall 2.6s ease-in forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(540deg); opacity: .9; } }
+
+  footer { background: var(--night); color: var(--sage); text-align: center; padding: 3rem 1.5rem calc(3rem + var(--safe-bottom)); }
+  footer p { margin: 0; }
+  footer .big { font-family: var(--serif); font-size: 2.2rem; color: var(--paper); margin-bottom: .2rem; }
+  footer .big i { color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<nav class="nav" aria-label="Sidens afsnit">
+  <ul>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#sted">Sted</a></li>
+    <li><a href="#overnatning">Overnatning</a></li>
+    <li><a href="#praktisk">Dresscode og gaver</a></li>
+    <li><a href="#bordplan">Bordplan</a></li>
+    <li><a href="#tilmelding">Tilmelding</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="stars" id="stars" aria-hidden="true"></div>
+  <div class="sun" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <p class="date">Lørdag den 24. juli 2027 ved Limfjorden</p>
+
+    <h1><span>Gustav</span> <span class="amp">&amp;</span> <span>Camilla</span></h1>
+
+    <div class="names" aria-hidden="true">
+      <p class="name-line">
+        <span class="w" data-show="s">Christof</span><span class="w" data-show="b">Gustav</span><span class="w" data-show="b">Sander</span><span class="w" data-show="b">Mariegaard</span><span class="w" data-show="m">Caspersen</span>
+      </p>
+      <p class="name-line">
+        <span class="w" data-show="b">Camilla</span><span class="w" data-show="b">Krogner</span><span class="w" data-show="m">Mariegaard</span><span class="w" data-show="b">Caspersen</span>
+      </p>
+    </div>
+    <p class="sr-only" id="namesSR" aria-live="polite">Christof Gustav Sander Mariegaard og Camilla Krogner Caspersen</p>
+
+    <div class="switch-wrap">
+      <button class="switch" id="nameSwitch" role="switch" aria-checked="false" aria-label="Skift mellem ugifte og gifte navne">
+        <span class="opt opt-single">Ugift</span>
+        <span class="track" aria-hidden="true"></span>
+        <span class="opt opt-married">Gift</span>
+      </button>
+      <p class="caption" id="caption">Sådan står vi i papirerne i dag.</p>
+    </div>
+
+    <div class="count" id="count" aria-hidden="true">
+      <div><b id="cdD">000</b><span>dage</span></div>
+      <div><b id="cdH">00</b><span>timer</span></div>
+      <div><b id="cdM">00</b><span>minutter</span></div>
+      <div><b id="cdS">00</b><span>sekunder</span></div>
+    </div>
+    <p class="count-label" id="countLabel">til vi siger ja</p>
+  </div>
+
+  <!-- Bølger -->
+  <svg class="waves" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M-100 118 C140 88 480 150 720 118 S1300 88 1540 118 V260 H-100Z" fill="#3b6a66" fill-opacity=".85"/>
+    <path d="M-100 160 C160 132 520 192 800 156 S1300 130 1540 160 V260 H-100Z" fill="#2b4e4b"/>
+    <path d="M-100 208 C180 188 600 232 900 208 S1300 196 1540 208 V260 H-100Z" fill="#edf1ec"/>
+  </svg>
+
+  <!-- Siv -->
+  <svg class="reeds left" viewBox="0 0 160 260" aria-hidden="true" focusable="false">
+    <g stroke="#7d9a7c" stroke-width="3" fill="none" stroke-linecap="round">
+      <path d="M30 260 C28 190 34 120 24 40"/><path d="M62 260 C66 180 56 130 70 70"/>
+      <path d="M96 260 C92 200 104 160 98 110"/><path d="M10 260 C14 210 8 170 14 140"/>
+      <path d="M50 260 C76 214 112 204 150 146" stroke-width="2.4"/><path d="M20 260 C4 220 -4 200 -12 186" stroke-width="2.4"/>
+    </g>
+    <g fill="#8a6f55">
+      <rect x="18.5" y="18" width="11" height="40" rx="5.5" transform="rotate(-4 24 40)"/>
+      <rect x="64.5" y="46" width="11" height="38" rx="5.5" transform="rotate(5 70 70)"/>
+      <rect x="93" y="88" width="10" height="34" rx="5" transform="rotate(-3 98 110)"/>
+    </g>
+  </svg>
+  <svg class="reeds right" viewBox="0 0 160 260" aria-hidden="true" focusable="false">
+    <g stroke="#7d9a7c" stroke-width="3" fill="none" stroke-linecap="round">
+      <path d="M40 260 C44 180 34 110 48 48"/><path d="M78 260 C72 200 84 150 76 96"/>
+      <path d="M112 260 C108 210 118 180 112 150"/>
+      <path d="M60 260 C90 218 122 214 156 166" stroke-width="2.4"/>
+    </g>
+    <g fill="#8a6f55">
+      <rect x="42.5" y="26" width="11" height="40" rx="5.5" transform="rotate(4 48 48)"/>
+      <rect x="70.5" y="74" width="10" height="36" rx="5" transform="rotate(-5 76 96)"/>
+    </g>
+  </svg>
+</header>
+
+<main>
+
+  <section class="s-welcome" id="velkomst">
+    <div class="wrap wide">
+      <h2 class="reveal">Vi skal giftes, og du skal med.</h2>
+      <p class="intro reveal" style="--d:.1s">
+        Vi har valgt en sommerdag ved Limfjorden. Her på siden finder du programmet, menuen, bordplanen og alt det praktiske.
+        Nederst kan du give os besked om, at du kommer.
+      </p>
+
+      <ul class="facts">
+        <li class="reveal" style="--d:.05s">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+          <div><b>24. juli 2027</b><span>Vi mødes kl. 13.00</span></div>
+        </li>
+        <li class="reveal" style="--d:.15s">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <div><b>Tabu Catering</b><span>Skydebanevej 50, Aalborg</span></div>
+        </li>
+        <li class="reveal" style="--d:.25s">
+          <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3l-5 4 3 3 2-1.5V21h8V8.5L18 10l3-3-5-4c-.5 1.5-2 2.5-4 2.5S8.5 4.5 8 3z"/></svg></span>
+          <div><b>Ingen dresscode</b><span>Bare ikke hvid kjole</span></div>
+        </li>
+      </ul>
+
+    </div>
+  </section>
+
+  <section id="program" class="s-program">
+    <div class="wrap">
+      <h2 class="reveal">Dagens program</h2>
+      <p class="lede reveal">Vi mødes ved vandet, og dagen slutter i tipien.</p>
+
+      <ol class="timeline">
+        <li class="reveal">
+          <time datetime="13:00">13.00</time>
+          <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M2 20c0-4 3-6 6-6s6 2 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c3 0 6 1.6 6 5"/></svg></span>
+          <div><h3>Vi mødes</h3><p>Kom gerne i god tid, så alle når at finde plads inden vielsen.</p></div>
+        </li>
+        <li class="reveal">
+          <time datetime="14:00">14.00</time>
+          <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="14" r="5"/><circle cx="15" cy="14" r="5"/><path d="M12 5l1.5-2h-3z"/></svg></span>
+          <div><h3>Vielse ved vandet</h3><p>Vi siger ja med udsigt til Limfjorden. Vielsen varer til ca. 14.45.</p></div>
+        </li>
+        <li class="reveal">
+          <time datetime="15:00">15.00</time>
+          <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c0 5-3 8-8 8S4 9 4 4z"/><path d="M12 12v8M8 20h8"/></svg></span>
+          <div><h3>Reception</h3><p>Sandwich og saltede snacks. Der er kaffe, te, øl, vand og mineralvand.</p></div>
+        </li>
+        <li class="reveal">
+          <time datetime="17:00">17.00</time>
+          <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l-1 10a2 2 0 0 1-4 0z"/><path d="M12 15v5M9 20h6"/><circle cx="19" cy="6" r="1"/><circle cx="5" cy="9" r="1"/></svg></span>
+          <div><h3>Velkomst</h3><p>Bobler og snacks, inden vi går til bords.</p></div>
+        </li>
+        <li class="reveal">
+          <time datetime="17:30">17.30</time>
+          <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v6c0 2 1.5 3 3 3s3-1 3-3V3M8 3v18"/><path d="M17 21V3c-2.5 1-4 4-4 8h4"/></svg></span>
+          <div><h3>Til bords</h3><p>Social dining med 8 serveringer. Se menuen længere nede.</p></div>
+        </li>
+        <li class="reveal later">
+          <time>Senere</time>
+          <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 18H3z"/><path d="M12 21l-3-6h6z"/></svg></span>
+          <div><h3>Kaffe, sødt og fest i tipien</h3><p>Her holder vi festen. Tidspunkter for taler og dans udsender vi senere.</p></div>
+        </li>
+      </ol>
+
+      <p class="note reveal">Tidspunkterne kan rykke sig lidt. Vi opdaterer siden, hvis der kommer ændringer.</p>
+    </div>
+  </section>
+
+  <section id="menu" class="s-menu">
+    <div class="wrap wide">
+      <h2 class="reveal">Menu</h2>
+      <p class="lede reveal">Maden serveres som social dining: Retterne kommer ind til bordet, og I deler. Menuen er ikke endelig, og der kan komme ændringer.</p>
+
+      <div class="menu-grid">
+        <div class="course reveal" data-n="1">
+          <p class="heat">1. heat</p>
+          <h3>Forretter</h3>
+          <ul>
+            <li>Surdejsbrød med lokalt smør</li>
+            <li>Carpaccio (eller en anden ret uden fisk)</li>
+            <li>Skaldyrssalat af håndpillede rejer</li>
+            <li>Grøntret efter sæson</li>
+          </ul>
+        </div>
+        <div class="course reveal" data-n="2" style="--d:.12s">
+          <p class="heat">2. heat</p>
+          <h3>Hovedret</h3>
+          <ul>
+            <li>Frilandsfjerkræ, marineret gris, lam, okse eller sommerbuk</li>
+            <li>Kartofler og løvstikke</li>
+            <li>Passende sauce</li>
+            <li>2–3 slags sæsongrønt</li>
+            <li>Salat og syrnet dressing</li>
+          </ul>
+        </div>
+        <div class="course reveal" data-n="3" style="--d:.24s">
+          <p class="heat">3. heat</p>
+          <h3>Dessert</h3>
+          <ul>
+            <li>Tiramisu</li>
+            <li>Tærte med karamelchokoladecreme eller vaniljecreme og bær</li>
+            <li>Is</li>
+            <li>Brownie</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="menu-foot reveal">
+        <div>
+          <h3>Kaffe og sødt</h3>
+          <p>Serveres sammen med desserten eller lige efter. Bailey og portvin kan fås til kaffen.</p>
+        </div>
+        <div>
+          <h3>Drikkevarer til middagen</h3>
+          <p>Øl, vand, vin og mineralvand i ubegrænsede mængder fra forret til og med dessert.</p>
+        </div>
+        <div class="allergy">
+          <strong>Har du allergier eller særlige hensyn?</strong><br>
+          Skriv det i <a href="#tilmelding">tilmeldingen</a>, så giver vi besked videre til køkkenet.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sted" class="s-sted">
+    <div class="wrap wide">
+      <h2 class="reveal">Stedet</h2>
+      <p class="lede reveal">Vielse, reception og fest foregår alle samme sted, helt ude ved Limfjorden.</p>
+
+      <div class="place">
+        <figure class="photo reveal">
+          <!-- Læg et billede af lokationen i mappen "billeder" og kald det lokation.jpg -->
+          <img src="billeder/lokation.jpg" alt="Tabu Catering ved Skydebanen og Hytteøen med udsigt over Limfjorden" onerror="this.parentElement.classList.add('is-empty')">
+          <svg class="ph-art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="phSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd3d9"/><stop offset=".62" stop-color="#f6e3b5"/></linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#phSky)"/>
+            <circle cx="310" cy="150" r="30" fill="#f1c565"/>
+            <rect y="172" width="400" height="128" fill="#7fa3ad"/>
+            <g stroke="#ffffff" stroke-opacity=".45" stroke-width="2" stroke-linecap="round"><path d="M230 200h60M250 214h90M40 230h80M170 246h110"/></g>
+            <path d="M0 176 Q110 158 210 172 T400 168 V190 H0Z" fill="#86a487"/>
+            <path d="M104 176 L152 78 L200 176Z" fill="#f4ead0"/>
+            <path d="M152 78 L146 56 M152 78 L160 54" stroke="#8a6f55" stroke-width="3" stroke-linecap="round"/>
+            <path d="M140 176 L152 138 L164 176Z" fill="#2b4e4b"/>
+            <rect x="232" y="150" width="34" height="26" fill="#d9cfb8"/><path d="M228 150 L249 132 L270 150Z" fill="#8a6f55"/>
+            <rect x="276" y="154" width="30" height="22" fill="#d9cfb8"/><path d="M272 154 L291 138 L310 154Z" fill="#8a6f55"/>
+            <g stroke="#5f7a61" stroke-width="3" stroke-linecap="round" fill="none"><path d="M30 190 Q26 150 34 120"/><path d="M48 192 Q54 160 46 140"/><path d="M360 188 Q366 150 356 124"/></g>
+            <g fill="#8a6f55"><rect x="29" y="104" width="9" height="30" rx="4.5"/><rect x="41" y="124" width="8" height="26" rx="4"/><rect x="351" y="108" width="9" height="30" rx="4.5"/></g>
+          </svg>
+          <span class="ph-cap">Billede af stedet kommer her</span>
+        </figure>
+
+        <div class="reveal" style="--d:.15s">
+          <address>
+            <strong>Tabu Catering</strong>
+            Skydebanen og Hytteøen<br>
+            Skydebanevej 50<br>
+            9000 Aalborg
+          </address>
+          <p>Vielsen holdes ved vandet. Festen holdes i tipien, og hytterne til overnatning ligger lige ved siden af.</p>
+          <p class="small">Der er gratis parkering i nærheden. Vi markerer den på kortet, så du ikke behøver lede efter den.</p>
+          <p><a class="btn ghost ext" href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a></p>
+        </div>
+      </div>
+
+      <div class="map reveal">
+        <div id="map" role="region" aria-label="Kort over Tabu Catering, Skydebanevej 50, Aalborg">
+          <div class="map-fallback">
+            <p><strong>Skydebanevej 50, 9000 Aalborg</strong></p>
+            <p>Kortet kunne ikke indlæses. Brug knappen nedenfor i stedet.</p>
+            <a class="btn ext" href="https://www.google.com/maps/search/?api=1&query=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Åbn i Google Maps</a>
+          </div>
+        </div>
+        <div class="map-foot">
+          <span>Skydebanevej 50, 9000 Aalborg</span>
+          <a class="ext" href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="overnatning" class="s-stay">
+    <div class="wrap wide">
+      <div class="stay">
+        <div class="reveal">
+          <h2>Overnatning</h2>
+          <p class="lede" style="margin-bottom:1rem">Du kan sove i en af hytterne ved Tabu Catering. De ligger lige op ad tipien, hvor vi holder fest, så du kan gå direkte i seng.</p>
+          <p>Brug vores rabatkode, når du booker. Hytterne er begrænsede, så book i god tid.</p>
+          <p><a href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer" class="btn ext">Book en hytte</a></p>
+        </div>
+
+        <div class="ticket reveal" style="--d:.15s">
+          <p class="t-small">Rabatkode til hyttebooking</p>
+          <p class="t-big">10 % rabat</p>
+          <hr class="cut">
+          <div class="code">
+            <span id="codeText">BRYLLUP2027</span>
+            <button type="button" id="copyBtn">Kopier</button>
+          </div>
+          <p class="msg" id="copyMsg" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="praktisk" class="s-extra">
+    <div class="wrap wide">
+      <div class="two">
+        <div class="reveal">
+          <svg class="nowhite" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="29" fill="#fff" stroke="#1c3836" stroke-width="3"/>
+            <path d="M26 14h12l2 14 9 22H15l9-22z" fill="none" stroke="#1c3836" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M12 52L52 12" stroke="#1c3836" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <h2>Dresscode</h2>
+          <p>Der er ingen dresscode. Tag noget på, du har det godt i.</p>
+          <p>Bare ikke en hvid kjole. Den har Camilla allerede styr på.</p>
+          <p class="small">Vi er udenfor ved vandet, så en trøje eller en jakke til aftenen er en god idé.</p>
+        </div>
+        <div class="reveal" style="--d:.15s">
+          <h2>Gaveønsker</h2>
+          <p>Det vigtigste er, at du kommer. Hvis du alligevel gerne vil give noget, er her nogle idéer.</p>
+          <!-- Rediger listen her: ét <li> pr. ønske -->
+          <ul class="wishes">
+            <li>Et bidrag til bryllupsrejsen</li>
+            <li>En støbejernsgryde</li>
+            <li>Planter og krukker til altanen</li>
+            <li>Gavekort til en god restaurant i Aalborg</li>
+            <li>Et godt brætspil</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bordplan" class="s-seat">
+    <div class="wrap wide">
+      <h2 class="reveal">Bordplan</h2>
+      <p class="lede reveal">Her kan du se, hvem du skal sidde sammen med til middagen. Bordplanen bliver fyldt ud, når alle har svaret.</p>
+      <p class="seat-tools reveal"><button type="button" class="linklike" id="toggleAll" aria-expanded="false">Vis alle gæster</button></p>
+      <div class="tables" id="tables"></div>
+    </div>
+  </section>
+
+  <section id="tilmelding" class="rsvp">
+    <div class="wrap">
+      <h2 class="reveal">Tilmelding</h2>
+      <p class="lede reveal">Giv os besked senest 1. maj 2027. Svaret går direkte til os begge.</p>
+
+      <form id="rsvpForm" class="reveal" novalidate>
+        <input class="trap" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="field">
+          <label for="navn">Dit navn</label>
+          <input type="text" id="navn" name="Navn" autocomplete="name" required>
+        </div>
+
+        <fieldset>
+          <legend>Kommer du?</legend>
+          <div class="radios">
+            <label><input type="radio" name="Kommer" value="Ja" required checked> Ja, jeg kommer</label>
+            <label><input type="radio" name="Kommer" value="Nej"> Nej, desværre</label>
+          </div>
+        </fieldset>
+
+        <div id="attendFields" style="display:grid;gap:1.4rem">
+          <div class="field">
+            <label for="antal">Hvor mange kommer I? <span class="hint">Inklusive dig selv</span></label>
+            <input type="number" id="antal" name="Antal personer" min="1" max="10" value="1" inputmode="numeric">
+          </div>
+
+          <div class="field">
+            <label for="overnat">Overnatter I?</label>
+            <select id="overnat" name="Overnatning">
+              <option>Ja, vi overnatter</option>
+              <option>Nej, vi tager hjem</option>
+              <option>Det ved vi ikke endnu</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="allergi">Allergier eller særlige hensyn til maden <span class="hint">Skriv gerne, hvem det gælder</span></label>
+            <textarea id="allergi" name="Allergier"></textarea>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="besked">Vil du sige noget til os? <span class="hint">Valgfrit</span></label>
+          <textarea id="besked" name="Besked" style="min-height:80px"></textarea>
+        </div>
+
+        <button class="btn" type="submit" id="sendBtn">Send tilmelding</button>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="form-note reveal"><strong>Husk at booke din hytte selv.</strong> Vi spørger kun om overnatning, så vi har overblik over morgenmaden dagen efter. Du kan <a class="ext" href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer">booke her</a> og bruge rabatkoden under <a href="#overnatning">overnatning</a>.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p class="big">Gustav <i>&amp;</i> Camilla</p>
+  <p>24. juli 2027</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* =====================================================
+   INDSTILLINGER – ret her
+   ===================================================== */
+
+// Tilmeldingen sendes via FormSubmit.co til disse mails.
+// Første gang nogen sender formularen, får "to" en aktiveringsmail, som skal bekræftes.
+const RSVP = {
+  to: "christof@example.com",   // <- jeres mail
+  cc: "camilla@example.com"     // <- kærestens mail
+};
+
+// Bryllupstidspunkt (vielsen kl. 14, dansk sommertid)
+const WEDDING = new Date("2027-07-24T14:00:00+02:00");
+
+// Bordplan: ret navnene i "guests". Tomme pladser vises som "Ledig plads".
+// 7 borde med 7 pladser og 1 bord med 6 pladser = 55 gæster.
+const TABLES = [
+  { name: "Bord 1", sub: "Brudeparret", seats: 7, guests: [] },
+  { name: "Bord 2", sub: "", seats: 7, guests: [] },
+  { name: "Bord 3", sub: "", seats: 7, guests: [] },
+  { name: "Bord 4", sub: "", seats: 7, guests: [] },
+  { name: "Bord 5", sub: "", seats: 7, guests: [] },
+  { name: "Bord 6", sub: "", seats: 7, guests: [] },
+  { name: "Bord 7", sub: "", seats: 7, guests: [] },
+  { name: "Bord 8", sub: "", seats: 6, guests: [] }
+];
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* =====================================================
+   Stjerner i heroen
+   ===================================================== */
+(function stars() {
+  const host = document.getElementById("stars");
+  for (let i = 0; i < 46; i++) {
+    const s = document.createElement("span");
+    const size = 1 + Math.random() * 2;
+    s.className = "star";
+    s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;width:${size}px;height:${size}px;animation-duration:${3 + Math.random() * 4}s;animation-delay:${-Math.random() * 6}s`;
+    host.appendChild(s);
+  }
+})();
+
+/* =====================================================
+   Skift mellem ugifte og gifte navne
+   Ord der kun hører til den ene tilstand glider ind og ud.
+   ===================================================== */
+const STATES = {
+  single: {
+    caption: "Sådan står vi i papirerne i dag.",
+    sr: "Christof Gustav Sander Mariegaard og Camilla Krogner Caspersen"
+  },
+  married: {
+    caption: "Sådan står vi i papirerne efter den 24. juli.",
+    sr: "Gustav Sander Mariegaard Caspersen og Camilla Krogner Mariegaard Caspersen"
+  }
+};
+const sw = document.getElementById("nameSwitch");
+const words = document.querySelectorAll(".w");
+
+function setNames(key) {
+  let i = 0;
+  words.forEach(w => {
+    const d = w.dataset.show;
+    const show = d === "b" || (d === "s" && key === "single") || (d === "m" && key === "married");
+    w.style.transitionDelay = reduce ? "0s" : `${(i++ % 5) * 0.05}s`;
+    w.classList.toggle("off", !show);
+  });
+  document.getElementById("caption").textContent = STATES[key].caption;
+  document.getElementById("namesSR").textContent = STATES[key].sr;
+}
+setNames("single");
+sw.addEventListener("click", () => {
+  const toMarried = sw.getAttribute("aria-checked") !== "true";
+  sw.setAttribute("aria-checked", String(toMarried));
+  setNames(toMarried ? "married" : "single");
+});
+
+/* =====================================================
+   Nedtælling
+   ===================================================== */
+(function countdown() {
+  const pad = n => String(n).padStart(2, "0");
+  const el = id => document.getElementById(id);
+  function tick() {
+    let ms = WEDDING - new Date();
+    if (ms <= 0) {
+      el("count").hidden = true;
+      el("countLabel").textContent = "Vi er gift!";
+      return;
+    }
+    const s = Math.floor(ms / 1000);
+    el("cdD").textContent = Math.floor(s / 86400);
+    el("cdH").textContent = pad(Math.floor(s % 86400 / 3600));
+    el("cdM").textContent = pad(Math.floor(s % 3600 / 60));
+    el("cdS").textContent = pad(s % 60);
+    setTimeout(tick, 1000);
+  }
+  tick();
+})();
+
+/* =====================================================
+   Fade-ind ved scroll
+   ===================================================== */
+function initReveal() {
+  const els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || reduce) { els.forEach(e => e.classList.add("in")); return; }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, { threshold: .12, rootMargin: "0px 0px -6% 0px" });
+  els.forEach(e => io.observe(e));
+}
+
+/* =====================================================
+   Kopier rabatkode
+   ===================================================== */
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  const msg = document.getElementById("copyMsg");
+  const btn = document.getElementById("copyBtn");
+  const codeEl = document.getElementById("codeText");
+  const text = codeEl.textContent.trim();
+  let ok = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    ok = true;
+  } catch (e) {
+    // Reserve-løsning til browsere og forhåndsvisninger, der blokerer clipboard-API'et
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+    ta.remove();
+  }
+  if (ok) {
+    msg.textContent = "Koden er kopieret.";
+    btn.textContent = "Kopieret";
+    setTimeout(() => { btn.textContent = "Kopier"; }, 2000);
+  } else {
+    const r = document.createRange();
+    r.selectNodeContents(codeEl);
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    msg.textContent = "Koden er markeret. Tryk Ctrl+C (eller Cmd+C) for at kopiere.";
+  }
+});
+
+/* =====================================================
+   Links der åbner i ny fane
+   ===================================================== */
+document.addEventListener("click", e => {
+  const a = e.target.closest("a.ext");
+  if (!a) return;
+  e.preventDefault();
+  const w = window.open(a.href, "_blank", "noopener,noreferrer");
+  if (!w) window.location.href = a.href;   // hvis pop-ups er blokeret
+});
+
+/* =====================================================
+   Kort (OpenStreetMap)
+   Adressen slås op automatisk. Tilføj parkeringspladsen herunder.
+   ===================================================== */
+// Parkering: højreklik (eller hold fingeren nede) på pladsen i Google Maps,
+// kopiér de to tal og sæt dem ind her. Lad stå som null, indtil I kender dem.
+const PARKING = null;   // fx { lat: 57.0123, lng: 9.9012, label: "Gratis parkering" }
+
+(function map() {
+  const el = document.getElementById("map");
+  if (typeof L === "undefined") return;                      // biblioteket blev ikke hentet: fallback vises
+  fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent("Skydebanevej 50, 9000 Aalborg"))
+    .then(r => r.json())
+    .then(res => {
+      if (!res.length) throw new Error("ingen adresse");
+      const venue = [parseFloat(res[0].lat), parseFloat(res[0].lon)];
+      el.innerHTML = "";
+      const m = L.map(el, { scrollWheelZoom: false }).setView(venue, 16);
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+      }).addTo(m);
+      const icon = (cls, txt) => L.divIcon({ className: "", html: `<div class="pin ${cls}"><span>${txt}</span></div>`, iconSize: [30, 30], iconAnchor: [15, 30] });
+      L.marker(venue, { icon: icon("", "♥") }).addTo(m).bindPopup("<strong>Tabu Catering</strong><br>Her holder vi bryllup");
+      if (PARKING) {
+        const pk = [PARKING.lat, PARKING.lng];
+        L.marker(pk, { icon: icon("park", "P") }).addTo(m).bindPopup(PARKING.label || "Gratis parkering");
+        m.fitBounds([venue, pk], { padding: [50, 50], maxZoom: 17 });
+      }
+      setTimeout(() => m.invalidateSize(), 300);
+    })
+    .catch(() => { /* fallback-boksen bliver stående */ });
+})();
+
+/* =====================================================
+   Bordplan
+   ===================================================== */
+(function renderTables() {
+  const host = document.getElementById("tables");
+  const allBtn = document.getElementById("toggleAll");
+
+  TABLES.forEach((t, idx) => {
+    const el = document.createElement("article");
+    el.className = "tbl reveal";
+    el.style.setProperty("--d", `${(idx % 4) * 0.08}s`);
+    let seats = "";
+    for (let i = 0; i < t.seats; i++) {
+      const a = (i / t.seats) * 2 * Math.PI - Math.PI / 2;
+      seats += `<span class="seat" style="left:${50 + 43 * Math.cos(a)}%;top:${50 + 43 * Math.sin(a)}%">${i + 1}</span>`;
+    }
+    const num = t.name.replace(/\D+/g, "");
+    let list = "";
+    for (let i = 0; i < t.seats; i++) {
+      const g = t.guests[i];
+      list += `<li class="${g ? "" : "empty"}"><b>${i + 1}</b><span>${g ? g : "Ledig plads"}</span></li>`;
+    }
+    el.innerHTML = `
+      <h3>${t.name}</h3>
+      <p class="sub">${t.sub || ""}</p>
+      <div class="tbl-visual" role="img" aria-label="${t.name} med ${t.seats} pladser">
+        <div class="tbl-top">${num}</div>${seats}
+      </div>
+      <button type="button" class="linklike more" aria-expanded="false" aria-controls="tl-${idx}">Vis gæster</button>
+      <div class="tl" id="tl-${idx}"><div class="tl-inner"><ol>${list}</ol></div></div>`;
+    host.appendChild(el);
+  });
+
+  const cards = [...host.querySelectorAll(".tbl")];
+  function setOpen(card, open) {
+    card.querySelector(".tl").classList.toggle("open", open);
+    const b = card.querySelector(".more");
+    b.setAttribute("aria-expanded", String(open));
+    b.textContent = open ? "Skjul gæster" : "Vis gæster";
+  }
+  function syncAll() {
+    const allOpen = cards.every(c => c.querySelector(".tl").classList.contains("open"));
+    allBtn.textContent = allOpen ? "Skjul alle gæster" : "Vis alle gæster";
+    allBtn.setAttribute("aria-expanded", String(allOpen));
+  }
+  host.addEventListener("click", e => {
+    const b = e.target.closest(".more");
+    if (!b) return;
+    const card = b.closest(".tbl");
+    setOpen(card, !card.querySelector(".tl").classList.contains("open"));
+    syncAll();
+  });
+  allBtn.addEventListener("click", () => {
+    const open = allBtn.getAttribute("aria-expanded") !== "true";
+    cards.forEach(c => setOpen(c, open));
+    syncAll();
+  });
+})();
+initReveal();
+
+/* =====================================================
+   Tilmelding
+   ===================================================== */
+const form = document.getElementById("rsvpForm");
+const statusEl = document.getElementById("status");
+const sendBtn = document.getElementById("sendBtn");
+const attend = document.getElementById("attendFields");
+
+form.addEventListener("change", () => {
+  const coming = form.elements["Kommer"].value === "Ja";
+  attend.hidden = !coming;
+  attend.querySelectorAll("input,select,textarea").forEach(f => f.disabled = !coming);
+});
+
+function confetti() {
+  if (reduce) return;
+  const colors = ["#e7c26a", "#a9bfa4", "#6c9ca8", "#fbfbf6", "#5f7a61"];
+  for (let i = 0; i < 44; i++) {
+    const c = document.createElement("span");
+    c.className = "conf";
+    c.style.cssText = `left:${Math.random() * 100}vw;background:${colors[i % colors.length]};animation-delay:${Math.random() * .6}s;animation-duration:${2 + Math.random() * 1.6}s`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  statusEl.className = "status";
+  if (form.elements["_honey"].value) return;               // spam-fælde
+  if (!form.elements["Navn"].value.trim()) {
+    statusEl.classList.add("err");
+    statusEl.textContent = "Skriv dit navn, så vi ved, hvem du er.";
+    form.elements["Navn"].focus();
+    return;
+  }
+  if (RSVP.to.endsWith("example.com")) {
+    statusEl.classList.add("err");
+    statusEl.textContent = "Tilmeldingen er ikke sat op endnu. Kontakt os direkte.";
+    return;
+  }
+
+  const data = {};
+  new FormData(form).forEach((v, k) => { if (k !== "_honey") data[k] = v; });
+  sendBtn.disabled = true;
+  statusEl.textContent = "Sender …";
+
+  try {
+    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(RSVP.to)}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        ...data,
+        _subject: `Bryllup: tilmelding fra ${data.Navn}`,
+        _cc: RSVP.cc,
+        _template: "table",
+        _captcha: "false"
+      })
+    });
+    const out = await res.json();
+    if (!res.ok || out.success === "false" || out.success === false) throw new Error(out.message || "Fejl");
+    form.reset();
+    attend.hidden = false;
+    attend.querySelectorAll("input,select,textarea").forEach(f => f.disabled = false);
+    statusEl.classList.add("ok");
+    statusEl.textContent = "Tak for dit svar. Vi har fået det.";
+    confetti();
+  } catch (err) {
+    statusEl.classList.add("err");
+    statusEl.textContent = "Det lykkedes ikke at sende. Prøv igen om lidt, eller skriv direkte til os.";
+  } finally {
+    sendBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
