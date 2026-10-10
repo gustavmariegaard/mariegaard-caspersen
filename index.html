@@ -5,12 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gustav & Camilla – 24. juli 2027</title>
 <meta name="description" content="Program, menu, bordplan, overnatning og tilmelding til vores bryllup ved Limfjorden den 24. juli 2027.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="theme-color" content="#14302f">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add("js");</script>
+<script>
+  /* Marker "js" og husk, hvis adgangskoden allerede er indtastet på denne enhed */
+  (function () {
+    var d = document.documentElement;
+    d.classList.add("js");
+    try {
+      if (localStorage.getItem("bryllup_ok") === "1" || sessionStorage.getItem("bryllup_ok") === "1") d.classList.add("unlocked");
+    } catch (e) {}
+  })();
+</script>
+<noscript><style>#gate { display: none !important; }</style></noscript>
 
 <style>
   :root {
@@ -383,6 +394,59 @@
   footer .big { font-family: var(--serif); font-size: 2.2rem; color: var(--paper); margin-bottom: .2rem; }
   footer .big i { color: var(--gold); }
 
+  /* ---------- Adgangsskærm ---------- */
+  html:not(.unlocked) body { overflow: hidden; }
+  html.unlocked #gate { display: none; }
+  #gate {
+    position: fixed; inset: 0; z-index: 100; overflow-y: auto; isolation: isolate;
+    display: flex; padding: 2rem 1.25rem 9rem; text-align: center; color: var(--mist);
+    background: linear-gradient(180deg, #0f2625 0%, var(--night) 28%, var(--fjord) 62%, #34605c 100%);
+    transition: opacity .5s ease, visibility .5s;
+  }
+  #gate.leaving { opacity: 0; visibility: hidden; }
+  #gate .gate-sun {
+    position: absolute; left: 50%; bottom: -120px; z-index: -1; width: min(700px, 130vw); aspect-ratio: 1;
+    translate: -50% 0; pointer-events: none;
+    background: radial-gradient(circle, rgba(244,200,110,.55) 0%, rgba(231,194,106,.3) 26%, rgba(231,194,106,0) 66%);
+  }
+  #gate form { display: block; width: 100%; max-width: 420px; margin: auto; gap: 0; position: relative; z-index: 3; }
+  #gate .gate-date { margin: 0 0 1rem; font-size: 1rem; letter-spacing: .03em; color: var(--sage); }
+  #gate .gate-names {
+    margin: 0; font-family: var(--serif); font-weight: 400; color: var(--paper);
+    font-size: clamp(3rem, 14vw, 5.2rem); line-height: 1; letter-spacing: -.015em;
+  }
+  #gate .gate-names i { color: var(--gold); padding: 0 .08em; }
+  #gate .gate-lede { margin: 1.4rem auto 1.8rem; max-width: 34ch; color: var(--sage); font-size: 1.02rem; line-height: 1.6; }
+  #gate .gate-pw { position: relative; margin-bottom: .9rem; }
+  #gate .gate-pw input {
+    width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--paper);
+    border: 2px solid transparent; border-radius: 14px; padding: 1rem 3.2rem 1rem 1.1rem; outline: 0; text-align: left;
+    transition: border-color .2s;
+  }
+  #gate .gate-pw input:focus { border-color: var(--gold); }
+  #gate .gate-eye {
+    position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px;
+    display: grid; place-items: center; background: none; border: 0; cursor: pointer; color: var(--ink-soft);
+  }
+  #gate .gate-eye svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  #gate .gate-remember {
+    display: flex; align-items: center; justify-content: center; gap: .6rem; margin: .2rem 0 1.1rem;
+    font-size: .95rem; font-weight: 400; color: var(--sage); cursor: pointer;
+  }
+  #gate .gate-remember input { width: 1.1rem; height: 1.1rem; accent-color: var(--gold); }
+  #gate .gate-btn {
+    width: 100%; font: inherit; font-weight: 600; font-size: 1.02rem; cursor: pointer;
+    padding: 1rem; border: 2px solid var(--gold); border-radius: 999px; background: var(--gold); color: var(--night);
+    transition: background .2s, border-color .2s, transform .15s;
+  }
+  #gate .gate-btn:hover { background: var(--paper); border-color: var(--paper); }
+  #gate .gate-btn:active { transform: scale(.98); }
+  #gate .gate-error { margin: 1rem 0 0; color: #ffd0c4; font-weight: 500; }
+  #gate .gate-waves { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: clamp(90px, 16vw, 200px); z-index: 1; display: block; pointer-events: none; }
+  #gate .gate-reeds { position: absolute; bottom: 0; z-index: 2; width: clamp(90px, 18vw, 200px); height: auto; pointer-events: none; transform-origin: 50% 100%; animation: sway 7s ease-in-out infinite alternate; }
+  #gate .gate-reeds.left { left: 1%; }
+  #gate .gate-reeds.right { right: 1%; scale: -1 1; animation-delay: -3s; }
+
   /* ---------- Mobil ---------- */
   @media (max-width: 600px) {
     .hero { padding: 3.5rem 1rem clamp(8rem, 30vw, 11rem); }
@@ -427,6 +491,56 @@
 </head>
 
 <body>
+
+<!-- Adgangsskærm. Koden ligger i scriptet nederst (PASSWORD). Siden er skjult for søgemaskiner med noindex. -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-sun" aria-hidden="true"></div>
+
+  <form id="gateForm" novalidate>
+    <p class="gate-date">24. juli 2027</p>
+    <p class="gate-names" id="gateTitle">Gustav <i>&amp;</i> Camilla</p>
+    <p class="gate-lede">Skriv adgangskoden fra invitationen for at se program, menu, bordplan og tilmelding.</p>
+
+    <div class="gate-pw">
+      <input id="gatePw" type="password" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Adgangskode" aria-label="Adgangskode">
+      <button type="button" class="gate-eye" id="gateEye" aria-label="Vis adgangskode">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+
+    <label class="gate-remember"><input type="checkbox" id="gateRemember" checked> Husk mig på denne enhed</label>
+    <button class="gate-btn" type="submit">Åbn siden</button>
+    <p class="gate-error" id="gateError" role="alert" hidden>Forkert adgangskode. Prøv igen.</p>
+  </form>
+
+  <svg class="gate-waves" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M-100 118 C140 88 480 150 720 118 S1300 88 1540 118 V260 H-100Z" fill="#3b6a66" fill-opacity=".85"/>
+    <path d="M-100 160 C160 132 520 192 800 156 S1300 130 1540 160 V260 H-100Z" fill="#2b4e4b"/>
+    <path d="M-100 208 C180 188 600 232 900 208 S1300 196 1540 208 V260 H-100Z" fill="#14302f"/>
+  </svg>
+  <svg class="gate-reeds left" viewBox="0 0 160 260" aria-hidden="true" focusable="false">
+    <g stroke="#7d9a7c" stroke-width="3" fill="none" stroke-linecap="round">
+      <path d="M30 260 C28 190 34 120 24 40"/><path d="M62 260 C66 180 56 130 70 70"/>
+      <path d="M96 260 C92 200 104 160 98 110"/><path d="M10 260 C14 210 8 170 14 140"/>
+      <path d="M50 260 C76 214 112 204 150 146" stroke-width="2.4"/>
+    </g>
+    <g fill="#8a6f55">
+      <rect x="18.5" y="18" width="11" height="40" rx="5.5" transform="rotate(-4 24 40)"/>
+      <rect x="64.5" y="46" width="11" height="38" rx="5.5" transform="rotate(5 70 70)"/>
+      <rect x="93" y="88" width="10" height="34" rx="5" transform="rotate(-3 98 110)"/>
+    </g>
+  </svg>
+  <svg class="gate-reeds right" viewBox="0 0 160 260" aria-hidden="true" focusable="false">
+    <g stroke="#7d9a7c" stroke-width="3" fill="none" stroke-linecap="round">
+      <path d="M40 260 C44 180 34 110 48 48"/><path d="M78 260 C72 200 84 150 76 96"/>
+      <path d="M112 260 C108 210 118 180 112 150"/>
+    </g>
+    <g fill="#8a6f55">
+      <rect x="42.5" y="26" width="11" height="40" rx="5.5" transform="rotate(4 48 48)"/>
+      <rect x="70.5" y="74" width="10" height="36" rx="5" transform="rotate(-5 76 96)"/>
+    </g>
+  </svg>
+</div>
 
 <nav class="nav" aria-label="Sidens afsnit">
   <ul>
@@ -829,6 +943,9 @@ const RSVP = {
   cc: "camilla@example.com"     // <- kærestens mail
 };
 
+// Adgangskode til siden (store/små bogstaver er ligegyldige)
+const PASSWORD = "wilma";
+
 // Bryllupstidspunkt (vielsen kl. 14, dansk sommertid)
 const WEDDING = new Date("2027-07-24T14:00:00+02:00");
 
@@ -846,6 +963,46 @@ const TABLES = [
 ];
 
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* =====================================================
+   Adgangsskærm
+   ===================================================== */
+(function gateLock() {
+  const root = document.documentElement;
+  const gate = document.getElementById("gate");
+  const pw = document.getElementById("gatePw");
+  const err = document.getElementById("gateError");
+  const guarded = [...document.body.children].filter(el => el !== gate && !["SCRIPT", "NOSCRIPT"].includes(el.tagName));
+  const setInert = on => guarded.forEach(el => on ? el.setAttribute("inert", "") : el.removeAttribute("inert"));
+
+  if (root.classList.contains("unlocked")) return;
+  setInert(true);                       // ingen kan tabbe ind i siden bag skærmen
+  setTimeout(() => pw.focus(), 60);
+
+  document.getElementById("gateEye").addEventListener("click", e => {
+    const show = pw.type === "password";
+    pw.type = show ? "text" : "password";
+    e.currentTarget.setAttribute("aria-label", show ? "Skjul adgangskode" : "Vis adgangskode");
+  });
+  pw.addEventListener("input", () => { err.hidden = true; });
+
+  document.getElementById("gateForm").addEventListener("submit", e => {
+    e.preventDefault();
+    if (pw.value.trim().toLowerCase() !== PASSWORD.toLowerCase()) {
+      err.hidden = false;
+      pw.select();
+      return;
+    }
+    try {
+      (document.getElementById("gateRemember").checked ? localStorage : sessionStorage).setItem("bryllup_ok", "1");
+    } catch (e2) {}
+    setInert(false);
+    const done = () => { root.classList.add("unlocked"); window.scrollTo(0, 0); };
+    if (reduce) { done(); return; }
+    gate.classList.add("leaving");
+    setTimeout(done, 500);
+  });
+})();
 
 /* =====================================================
    Stjerner i heroen
