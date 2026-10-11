@@ -145,6 +145,7 @@
   .c-sted { --bg: var(--lemon); }
   .c-stay { --bg: var(--apricot-l); }
   .c-extra { --bg: var(--cream); }
+  .c-toast { --bg: var(--apricot); }
   .c-seat { --bg: var(--sky); }
   .rsvp { --bg: var(--pistachio); overflow: hidden; }
   .wrap { max-width: 1100px; margin: 0 auto; }
@@ -228,6 +229,16 @@
   .two h2.t { font-size: clamp(2rem, 5vw, 3.2rem); }
   .wishes { list-style: none; margin: 1.2rem 0 0; padding: 0; border-bottom: 1px solid var(--line); }
   .wishes li { padding: .85rem 0; border-top: 1px solid var(--line); }
+
+  /* Toastmaster */
+  .toast { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .tcard { border: 1px solid var(--ink); padding: 1.4rem; background: var(--cream); }
+  .tcard .small { margin: 0; }
+  .tname { display: block; font-size: clamp(2rem, 5vw, 3rem); font-weight: 500; letter-spacing: -.04em; line-height: 1; margin: .3rem 0 1.2rem; }
+  .trow { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .8rem 0; border-top: 1px solid var(--line); }
+  .trow:last-child { border-bottom: 1px solid var(--line); }
+  .trow > span { opacity: .75; }
+  .trow a, .trow b { font-weight: 500; text-align: right; overflow-wrap: anywhere; }
 
   /* Bordplan */
   .seat-tools { margin: 0 0 1.5rem; }
@@ -322,7 +333,7 @@
 
   /* ---------- Mobil ---------- */
   @media (max-width: 820px) {
-    .place, .stay, .two { grid-template-columns: 1fr; }
+    .place, .stay, .two, .toast { grid-template-columns: 1fr; }
     .heats { grid-template-columns: 1fr; }
     .heat { min-height: 120px; }
   }
@@ -423,6 +434,7 @@
       <a class="chipb" href="#sted">Sted</a>
       <a class="chipb" href="#overnatning">Overnatning</a>
       <a class="chipb" href="#praktisk">Dresscode</a>
+      <a class="chipb" href="#toastmaster">Toastmaster</a>
       <a class="chipb" href="#bordplan">Bordplan</a>
     </div>
     <button type="button" class="chipb only-m" id="menuBtn" aria-expanded="false" aria-controls="sheet">Indhold</button>
@@ -437,8 +449,9 @@
     <li><a href="#sted"><span>03</span>Sted</a></li>
     <li><a href="#overnatning"><span>04</span>Overnatning</a></li>
     <li><a href="#praktisk"><span>05</span>Dresscode og gaver</a></li>
-    <li><a href="#bordplan"><span>06</span>Bordplan</a></li>
-    <li><a href="#tilmelding"><span>07</span>Tilmelding</a></li>
+    <li><a href="#toastmaster"><span>06</span>Toastmaster</a></li>
+    <li><a href="#bordplan"><span>07</span>Bordplan</a></li>
+    <li><a href="#tilmelding"><span>08</span>Tilmelding</a></li>
   </ol>
 </div>
 
@@ -533,10 +546,33 @@
           <a class="btn" href="#tilmelding">Gå til tilmelding</a>
         </div>
       </div>
+
+      <!--
+        NÅR MENUEN ER KLAR: Fjern "Kommer snart"-mærket og erstat de tre blokke i .heats nedenfor med dette,
+        og ret evt. teksten øverst ("Vi er stadig ved at lægge den sidste hånd på menuen ...").
+        Brug samme klasser som herunder, men med rigtige retter i en <ul class="dishes">.
+
+          1. heat
+            Surdejsbrød med lokalt smør
+            Carpaccio (eller en anden ret uden fisk)
+            Skaldyrssalat af håndpillede rejer
+            Grøntret efter sæson
+          2. heat
+            Frilandsfjerkræ, marineret gris, lam, okse eller sommerbuk
+            Kartofler og løvstikke
+            Passende sauce
+            2–3 slags sæsongrønt
+            Salat og syrnet dressing
+          3. heat
+            Tiramisu
+            Tærte med karamelchokoladecreme eller vaniljecreme og bær
+            Is
+            Brownie
+      -->
       <div class="heats">
-        <div class="heat reveal"><span>1. heat</span><div><b>Kommer snart</b><i style="width:80%"></i><i style="width:55%"></i><i style="width:68%"></i></div></div>
-        <div class="heat reveal" style="--d:.1s"><span>2. heat</span><div><b>Kommer snart</b><i style="width:70%"></i><i style="width:84%"></i><i style="width:52%"></i></div></div>
-        <div class="heat reveal" style="--d:.2s"><span>3. heat</span><div><b>Kommer snart</b><i style="width:76%"></i><i style="width:50%"></i></div></div>
+        <div class="heat reveal"><span>1. heat</span><div><b>Snart</b><i style="width:80%"></i><i style="width:55%"></i><i style="width:68%"></i></div></div>
+        <div class="heat reveal" style="--d:.1s"><span>2. heat</span><div><b>Snart</b><i style="width:70%"></i><i style="width:84%"></i><i style="width:52%"></i></div></div>
+        <div class="heat reveal" style="--d:.2s"><span>3. heat</span><div><b>Snart</b><i style="width:76%"></i><i style="width:50%"></i></div></div>
       </div>
     </div>
   </section>
@@ -658,9 +694,31 @@
     </div>
   </section>
 
+  <section class="sec c-toast" id="toastmaster">
+    <div class="wrap">
+      <p class="lab reveal"><b>06</b> Toastmaster</p>
+      <div class="toast">
+        <div class="reveal">
+          <h2 class="t">Vil du holde<br>tale?</h2>
+          <p class="lede" style="margin-bottom:1rem">Vores toastmaster er Michkel Mariegaard. Vil du holde en tale eller lave et indslag til festen, så kontakt ham.</p>
+          <p>Giv ham besked senest <b data-tm="deadline">17. juli 2027</b>, så han kan nå at lægge det ind i aftenens program.</p>
+        </div>
+
+        <div class="tcard reveal" style="--d:.15s">
+          <p class="small">Toastmaster</p>
+          <b class="tname">Michkel Mariegaard</b>
+          <!-- E-mail, telefon og frist rettes i indstillingerne øverst i scriptet (TOASTMASTER) -->
+          <div class="trow"><span>E-mail</span><a data-tm="email" href="mailto:michkel@eksempel.dk">michkel@eksempel.dk</a></div>
+          <div class="trow"><span>Telefon</span><a data-tm="phone" href="tel:+4500000000">+45 00 00 00 00</a></div>
+          <div class="trow"><span>Senest</span><b data-tm="deadline">17. juli 2027</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="sec c-seat" id="bordplan">
     <div class="wrap">
-      <p class="lab reveal"><b>06</b> Bordplan</p>
+      <p class="lab reveal"><b>07</b> Bordplan</p>
       <h2 class="t reveal">Find din<br>plads</h2>
       <p class="lede reveal">Her kan du se, hvem du skal sidde sammen med til middagen. Bordplanen bliver fyldt ud, når alle har svaret.</p>
       <p class="seat-tools reveal"><button type="button" class="linklike" id="toggleAll" aria-expanded="false">Vis alle gæster</button></p>
@@ -670,7 +728,7 @@
 
   <section class="sec rsvp" id="tilmelding">
     <div class="wrap">
-      <p class="lab reveal"><b>07</b> Tilmelding</p>
+      <p class="lab reveal"><b>08</b> Tilmelding</p>
       <h2 class="t reveal">Kommer<br>du?</h2>
       <p class="lede reveal">Giv os besked senest 1. maj 2027. Svaret går direkte til os begge.</p>
 
@@ -753,6 +811,13 @@ const PASSWORD = "wilma";
 // Bryllupstidspunkt (vielsen kl. 14, dansk sommertid)
 const WEDDING = new Date("2027-07-24T14:00:00+02:00");
 
+// Toastmaster: ret e-mail og telefon her. Fristen er en uge før brylluppet.
+const TOASTMASTER = {
+  email: "michkel@eksempel.dk",   // <- ret e-mail
+  phone: "+45 00 00 00 00",       // <- ret telefonnummer
+  deadline: "17. juli 2027"       // <- sidste frist for at kontakte ham
+};
+
 // Bordplan: ret navnene i "guests". Tomme pladser vises som "Ledig plads".
 // 6 borde med 8 pladser = 48 gæster.
 const TABLES = [
@@ -765,6 +830,14 @@ const TABLES = [
 ];
 
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* Udfyld toastmasterens oplysninger ud fra indstillingerne øverst */
+document.querySelectorAll("[data-tm]").forEach(el => {
+  const k = el.dataset.tm;
+  if (k === "email") { el.href = "mailto:" + TOASTMASTER.email; el.textContent = TOASTMASTER.email; }
+  else if (k === "phone") { el.href = "tel:" + TOASTMASTER.phone.replace(/[^\d+]/g, ""); el.textContent = TOASTMASTER.phone; }
+  else if (TOASTMASTER[k]) { el.textContent = TOASTMASTER[k]; }
+});
 
 /* =====================================================
    Menuark på mobil ("Indhold")
