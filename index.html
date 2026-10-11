@@ -46,7 +46,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: calc(60px + var(--safe-top)); -webkit-text-size-adjust: 100%; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(70px + var(--safe-top)); -webkit-text-size-adjust: 100%; }
   body {
     margin: 0; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.6;
     color: var(--ink); background: var(--cream); overflow-x: hidden;
@@ -64,17 +64,40 @@
   .f-sun2 { fill: var(--apricot); }
   .s-ink { fill: none; stroke: var(--ink); stroke-width: 2; }
 
-  /* ---------- Navigation ---------- */
-  .nav { position: sticky; top: 0; z-index: 30; background: var(--cream); border-bottom: 1px solid var(--line); padding-top: var(--safe-top); }
-  .nav-in { max-width: 1100px; margin: 0 auto; padding: 0 var(--gutter); height: 54px; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
-  .brand { font-weight: 600; font-size: .95rem; letter-spacing: -.01em; text-decoration: none; white-space: nowrap; }
-  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.4rem; overflow-x: auto; scrollbar-width: none; }
-  .nav ul::-webkit-scrollbar { display: none; }
-  .nav ul a { display: block; font-size: .88rem; text-decoration: none; white-space: nowrap; padding: .35rem 0; border-bottom: 1px solid transparent; }
-  .nav ul a:hover { border-bottom-color: currentColor; }
+  /* ---------- Navigation (svævende små knapper, inspireret af Barkas) ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 30; pointer-events: none;
+    padding: calc(.75rem + var(--safe-top)) var(--gutter) 0;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: .5rem;
+  }
+  .nav > * { pointer-events: auto; }
+  .nav-l { display: flex; align-items: center; gap: .4rem; }
+  .nav-links { display: flex; gap: .4rem; }
+  .chipb {
+    display: inline-block; font: inherit; font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    text-decoration: none; color: var(--ink); background: rgba(255,246,234,.72);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 0; border-radius: 6px; padding: .6rem .8rem; line-height: 1; white-space: nowrap; cursor: pointer; transition: background .2s;
+  }
+  .chipb:hover { background: rgba(255,246,234,.96); }
+  .logo, .logo:hover { background: var(--ink); color: var(--cream); font-weight: 700; letter-spacing: .08em; }
+  .logo:hover { opacity: .85; }
+  .only-m { display: none; }
+  .sheet {
+    position: fixed; inset: 0; z-index: 29; overflow-y: auto; background: rgba(255,246,234,.97);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    padding: calc(4.5rem + var(--safe-top)) var(--gutter) 2rem;
+    opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s;
+  }
+  .menu-open .sheet { opacity: 1; visibility: visible; }
+  .menu-open body { overflow: hidden; }
+  .sheet ol { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+  .sheet li a { display: flex; gap: 1rem; align-items: baseline; padding: 1rem 0; border-top: 1px solid var(--line); font-size: clamp(1.7rem, 7vw, 2.6rem); font-weight: 500; letter-spacing: -.03em; text-decoration: none; color: inherit; }
+  .sheet li a span { font-size: .8rem; font-weight: 500; letter-spacing: 0; min-width: 1.6rem; }
+  @media (max-width: 960px) { .nav-links { display: none; } .only-m { display: inline-block; } }
 
   /* ---------- Hero ---------- */
-  .hero { position: relative; overflow: hidden; background: var(--apricot); padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter) clamp(5rem, 9vw, 7rem); }
+  .hero { position: relative; overflow: hidden; background: var(--apricot); padding: clamp(5.5rem, 9vw, 7rem) var(--gutter) clamp(5rem, 9vw, 7rem); }
   .hero-in { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
   .sunw { position: absolute; right: max(-60px, -4vw); top: clamp(1rem, 4vw, 3rem); width: clamp(150px, 30vw, 340px); height: auto; z-index: 0; }
   .date { margin: 0 0 1.4rem; font-size: .98rem; animation: rise .9s .05s both; }
@@ -304,15 +327,8 @@
   }
   @media (max-width: 600px) {
     :root { --gutter: 1.2rem; }
-    html { scroll-padding-top: calc(86px + var(--safe-top)); }
 
-    /* Menu i to rækker: navnet øverst, links der kan stryges sidelæns nedenunder */
-    .nav-in { height: auto; flex-direction: column; align-items: stretch; gap: 0; padding-top: .7rem; padding-bottom: 0; }
-    .brand { font-size: .95rem; }
-    .nav ul { gap: 1.3rem; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter); -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); mask-image: linear-gradient(90deg, #000 90%, transparent); }
-    .nav ul a { padding: .7rem 0; }
-
-    .hero { padding-top: 2rem; }
+    .hero { padding-top: 5rem; }
     .sunw { width: 150px; right: -34px; opacity: .95; }
     .count { display: grid; grid-template-columns: repeat(4, max-content); gap: 1.1rem; }
     .lede { font-size: 1.05rem; margin-bottom: 1.8rem; }
@@ -376,7 +392,7 @@
 <!-- Adgangsskærm. Koden ligger i scriptet nederst (PASSWORD). Siden er skjult for søgemaskiner med noindex. -->
 <div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
   <svg class="gate-sun" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="46" fill="#FFF6EA"/><g stroke="#F6B98F" stroke-width="3"><path d="M0 62H100"/><path d="M0 72H100"/><path d="M0 83H100"/></g></svg>
-  <div class="gate-top"><b>Mariegaard Caspersen</b><span>24. juli 2027</span></div>
+  <div class="gate-top"><b>G &amp; C</b><span>24. juli 2027</span></div>
 
   <form id="gateForm" novalidate>
     <p class="gate-names" id="gateTitle">Gustav<br><i>&amp;</i> Camilla</p>
@@ -398,19 +414,32 @@
 </div>
 
 <nav class="nav" aria-label="Sidens afsnit">
-  <div class="nav-in">
-    <a class="brand" href="#top">Mariegaard Caspersen</a>
-    <ul>
-      <li><a href="#program">Program</a></li>
-      <li><a href="#menu">Menu</a></li>
-      <li><a href="#sted">Sted</a></li>
-      <li><a href="#overnatning">Overnatning</a></li>
-      <li><a href="#praktisk">Dresscode og gaver</a></li>
-      <li><a href="#bordplan">Bordplan</a></li>
-      <li><a href="#tilmelding">Tilmelding</a></li>
-    </ul>
+  <div class="nav-l">
+    <a class="chipb logo" href="#top" aria-label="Til toppen">G &amp; C</a>
+    <div class="nav-links">
+      <a class="chipb" href="#program">Program</a>
+      <a class="chipb" href="#menu">Menu</a>
+      <a class="chipb" href="#sted">Sted</a>
+      <a class="chipb" href="#overnatning">Overnatning</a>
+      <a class="chipb" href="#praktisk">Dresscode</a>
+      <a class="chipb" href="#bordplan">Bordplan</a>
+    </div>
+    <button type="button" class="chipb only-m" id="menuBtn" aria-expanded="false" aria-controls="sheet">Indhold</button>
   </div>
+  <a class="chipb" href="#tilmelding">Tilmelding</a>
 </nav>
+
+<div class="sheet" id="sheet" aria-hidden="true">
+  <ol>
+    <li><a href="#program"><span>01</span>Program</a></li>
+    <li><a href="#menu"><span>02</span>Menu</a></li>
+    <li><a href="#sted"><span>03</span>Sted</a></li>
+    <li><a href="#overnatning"><span>04</span>Overnatning</a></li>
+    <li><a href="#praktisk"><span>05</span>Dresscode og gaver</a></li>
+    <li><a href="#bordplan"><span>06</span>Bordplan</a></li>
+    <li><a href="#tilmelding"><span>07</span>Tilmelding</a></li>
+  </ol>
+</div>
 
 <header class="hero" id="top">
   <svg class="sunw" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="46" fill="#FFF6EA"/><g stroke="#F6B98F" stroke-width="3"><path d="M0 62H100"/><path d="M0 72H100"/><path d="M0 83H100"/></g></svg>
@@ -724,7 +753,7 @@
 <footer>
   <div class="wrap">
     <p class="big">Gustav <i>&amp;</i> Camilla</p>
-    <p class="cap"><span>24. juli 2027</span><span>Aalborg</span></p>
+    <p class="cap"><span>Mariegaard Caspersen, 24. juli 2027</span><span>Aalborg</span></p>
   </div>
 </footer>
 
@@ -758,6 +787,25 @@ const TABLES = [
 ];
 
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* =====================================================
+   Menuark på mobil ("Indhold")
+   ===================================================== */
+(function navSheet() {
+  const root = document.documentElement;
+  const btn = document.getElementById("menuBtn");
+  const sheet = document.getElementById("sheet");
+  function set(open) {
+    root.classList.toggle("menu-open", open);
+    btn.setAttribute("aria-expanded", String(open));
+    btn.textContent = open ? "Luk" : "Indhold";
+    sheet.setAttribute("aria-hidden", String(!open));
+  }
+  btn.addEventListener("click", () => set(!root.classList.contains("menu-open")));
+  sheet.addEventListener("click", e => { if (e.target.closest("a")) set(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") set(false); });
+  matchMedia("(min-width: 961px)").addEventListener("change", e => { if (e.matches) set(false); });
+})();
 
 /* =====================================================
    Adgangsskærm
