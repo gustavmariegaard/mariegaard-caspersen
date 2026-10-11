@@ -233,7 +233,8 @@
   .seat-tools { margin: 0 0 1.5rem; }
   .linklike { background: none; border: 0; padding: .2rem 0; font: inherit; font-weight: 500; color: var(--ink); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
   .linklike:hover { opacity: .6; }
-  .tables { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); align-items: start; }
+  .tables { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+  @media (max-width: 820px) { .tables { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .tbl { text-align: center; border: 1px solid var(--ink); padding: 1.3rem 1rem 1.1rem; transition: background .25s; }
   @media (hover: hover) { .tbl:hover { background: rgba(255,246,234,.55); } }
   .tbl h3 { font-size: 1.5rem; font-weight: 500; letter-spacing: -.03em; margin: 0; }
@@ -614,7 +615,7 @@
       <div class="stay">
         <div class="reveal">
           <h2 class="t">Sov ved<br>tipien</h2>
-          <p class="lede" style="margin-bottom:1rem">Du kan sove i en af hytterne på øen, hvor også tipien ligger. De ligger lige op ad tipien, hvor vi holder fest, så du kan gå direkte i seng.</p>
+          <p class="lede" style="margin-bottom:1rem">Du kan sove i en af hytterne på øen. De ligger lige op ad tipien, hvor vi holder fest, så du kan gå direkte i seng.</p>
           <p>Brug vores rabatkode, når du booker. Hytterne er begrænsede, så book i god tid.</p>
           <p><a href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer" class="btn">Book en hytte</a></p>
         </div>
@@ -631,20 +632,21 @@
       </div>
 
       <!--
-        Billeder af hytterne: læg dem i mappen "billeder" og kald dem hytte-1.jpg og hytte-2.jpg.
-        Vil I have flere, så kopiér en hel <figure>...</figure> og ret filnavnet (fx hytte-3.jpg).
+        Billeder af hytterne: de hentes fra mappen "billeder" (første billede: IMG_2842.webp, andet billede: hytte_indefra.webp).
+        Ligger filen i stedet direkte ved siden af index.html, finder siden den også.
+        Vil I have flere, så kopiér en hel <figure>...</figure> og ret filnavnet begge steder i <img>-linjen.
       -->
       <div class="stay-photos">
         <figure class="reveal">
           <div class="tile">
-            <img src="billeder/hytte-1.jpg" alt="Hytte ved Tabu Catering" onerror="this.parentElement.classList.add('is-empty')">
+            <img src="billeder/IMG_2842.webp" alt="Hytte ved Tabu Catering" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='IMG_2842.webp';}else{this.parentElement.classList.add('is-empty');}">
             <svg class="ph-art" viewBox="0 0 160 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#hutArt"/></svg>
           </div>
           <figcaption class="cap"><span>Hytterne</span><span>Lige ved tipien</span></figcaption>
         </figure>
         <figure class="reveal" style="--d:.15s">
           <div class="tile">
-            <img src="billeder/hytte-2.jpg" alt="Hytte ved Tabu Catering, set indefra" onerror="this.parentElement.classList.add('is-empty')">
+            <img src="billeder/hytte_indefra.webp" alt="Hytte ved Tabu Catering, set indefra" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='hytte_indefra.webp';}else{this.parentElement.classList.add('is-empty');}">
             <svg class="ph-art" viewBox="0 0 160 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#hutArt"/></svg>
           </div>
           <figcaption class="cap"><span>Indenfor</span><span>Plads til at sove</span></figcaption>
