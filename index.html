@@ -233,8 +233,8 @@
   .seat-tools { margin: 0 0 1.5rem; }
   .linklike { background: none; border: 0; padding: .2rem 0; font: inherit; font-weight: 500; color: var(--ink); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
   .linklike:hover { opacity: .6; }
-  .tables { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
-  @media (max-width: 820px) { .tables { grid-template-columns: repeat(2, minmax(0, 1fr)); } }  .tbl { text-align: center; border: 1px solid var(--ink); padding: 1.3rem 1rem 1.1rem; transition: background .25s; }
+  .tables { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); align-items: start; }
+  .tbl { text-align: center; border: 1px solid var(--ink); padding: 1.3rem 1rem 1.1rem; transition: background .25s; }
   @media (hover: hover) { .tbl:hover { background: rgba(255,246,234,.55); } }
   .tbl h3 { font-size: 1.5rem; font-weight: 500; letter-spacing: -.03em; margin: 0; }
   .tbl .sub { font-size: .85rem; margin: 0 0 .7rem; min-height: 1.4em; }
@@ -495,7 +495,7 @@
       </p>
       <ul class="facts reveal">
         <li><b>24. juli 2027</b><span>Vi mødes kl. 13.00</span></li>
-        <li><b>Tabu Catering</b><span>Skydebanevej 50, Aalborg</span></li>
+        <li><b>Adresse</b><span>Skydebanevej 50, Aalborg</span></li>
         <li><b>Ingen dresscode</b><span>Bare ikke hvid kjole</span></li>
       </ul>
     </div>
@@ -511,8 +511,8 @@
       <div class="pl reveal"><time datetime="14:00">14.00</time><div><b>Vielse ved vandet</b><span>Vi siger ja med udsigt til Limfjorden. Vielsen varer til ca. 14.45.</span></div></div>
       <div class="pl reveal"><time datetime="15:00">15.00</time><div><b>Reception</b><span>Sandwich og saltede snacks. Der er kaffe, te, øl og vand.</span></div></div>
       <div class="pl reveal"><time datetime="17:00">17.00</time><div><b>Velkomst</b><span>Bobler og snacks, inden vi går til bords.</span></div></div>
-      <div class="pl reveal"><time datetime="17:30">17.30</time><div><b>Til bords</b><span>Social dining med 8 serveringer. Se menuen længere nede.</span></div></div>
-      <div class="pl reveal"><time>Senere</time><div><b>Kaffe, sødt og fest i tipien</b><span>Her holder vi festen. Tidspunkter for taler og dans udsender vi senere.</span></div></div>
+      <div class="pl reveal"><time datetime="17:30">17.30</time><div><b>Til bords</b><span>Social dining. Se menuen længere nede.</span></div></div>
+      <div class="pl reveal"><time>Senere</time><div><b>Fest i tipien</b><span>Her holder vi festen.</span></div></div>
 
       <p class="note reveal">Tidspunkterne kan rykke sig lidt. Vi opdaterer siden, hvis der kommer ændringer.</p>
     </div>
@@ -528,7 +528,7 @@
       <div class="alb reveal">
         <h3>Har du allergier eller særlige hensyn?</h3>
         <div>
-          <p>Menuen er ikke på plads endnu, så vi kan nå at tage højde for jer. Skriv det i tilmeldingen, så giver vi besked videre til køkkenet.</p>
+          <p>Menuen er ikke på plads endnu, så vi kan nå at tage højde for jer. Skriv det i tilmeldingen – så giver vi besked til køkkenet.</p>
           <a class="btn" href="#tilmelding">Gå til tilmelding</a>
         </div>
       </div>
@@ -567,7 +567,7 @@
     <div class="wrap">
       <p class="lab reveal"><b>03</b> Sted</p>
       <h2 class="t reveal">Ved<br>Limfjorden</h2>
-      <p class="lede reveal">Vielse, reception og fest foregår alle samme sted, helt ude ved vandet.</p>
+      <p class="lede reveal">Vielse, reception og fest foregår samme sted. I naturen og med udsigt til Limfjorden.</p>
 
       <div class="place">
         <figure class="reveal">
@@ -581,26 +581,25 @@
 
         <div class="reveal" style="--d:.15s">
           <address>
-            Tabu Catering<br>
             Skydebanen og Hytteøen<br>
             Skydebanevej 50<br>
             9000 Aalborg
           </address>
           <p>Vielsen holdes ved vandet. Festen holdes i tipien, og hytterne til overnatning ligger lige ved siden af.</p>
-          <p class="small">Der er gratis parkering i nærheden af stedet.</p>
+          <p class="small">Der ligger en stor, gratis parkeringsplads lige ved siden af Hytteøen.</p>
           <p><a class="btn ol" href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a></p>
         </div>
       </div>
 
-      <div class="map reveal">
+      <div class="map">
         <!--
           Parkering på kortet: Lav et eget kort på https://www.google.com/maps/d/ (Mine kort),
           sæt en nål på stedet og en på parkeringspladsen, vælg Del > "Alle med linket",
           og vælg derefter menuen med de tre prikker > "Integrer på mit websted".
           Kopiér linket fra src="..." og erstat src herunder.
         -->
-        <iframe class="map-frame" title="Google-kort over Tabu Catering, Skydebanevej 50, Aalborg" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Skydebanevej%2050%2C%209000%20Aalborg&amp;z=16&amp;hl=da&amp;output=embed"></iframe>
+        <iframe class="map-frame" title="Google-kort over Tabu Catering, Skydebanevej 50, Aalborg" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Skydebanevej+50,+9000+Aalborg&amp;z=16&amp;hl=da&amp;output=embed"></iframe>
         <div class="map-foot">
           <span>Skydebanevej 50, 9000 Aalborg</span>
           <a href="https://www.google.com/maps/dir/?api=1&destination=Skydebanevej+50,+9000+Aalborg" target="_blank" rel="noopener noreferrer">Find vej i Google Maps</a>
@@ -615,7 +614,7 @@
       <div class="stay">
         <div class="reveal">
           <h2 class="t">Sov ved<br>tipien</h2>
-          <p class="lede" style="margin-bottom:1rem">Du kan sove i en af hytterne ved Tabu Catering. De ligger lige op ad tipien, hvor vi holder fest, så du kan gå direkte i seng.</p>
+          <p class="lede" style="margin-bottom:1rem">Du kan sove i en af hytterne på øen, hvor også tipien ligger. De ligger lige op ad tipien, hvor vi holder fest, så du kan gå direkte i seng.</p>
           <p>Brug vores rabatkode, når du booker. Hytterne er begrænsede, så book i god tid.</p>
           <p><a href="https://www.tabu-catering.dk/hyttebooking" target="_blank" rel="noopener noreferrer" class="btn">Book en hytte</a></p>
         </div>
@@ -638,14 +637,14 @@
       <div class="stay-photos">
         <figure class="reveal">
           <div class="tile">
-            <img src="IMG_2842.webp" alt="Hytte ved Tabu Catering" onerror="this.parentElement.classList.add('is-empty')">
+            <img src="billeder/hytte-1.jpg" alt="Hytte ved Tabu Catering" onerror="this.parentElement.classList.add('is-empty')">
             <svg class="ph-art" viewBox="0 0 160 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#hutArt"/></svg>
           </div>
           <figcaption class="cap"><span>Hytterne</span><span>Lige ved tipien</span></figcaption>
         </figure>
         <figure class="reveal" style="--d:.15s">
           <div class="tile">
-            <img src="hytte_indefra.webp" alt="Hytte ved Tabu Catering, set indefra" onerror="this.parentElement.classList.add('is-empty')">
+            <img src="billeder/hytte-2.jpg" alt="Hytte ved Tabu Catering, set indefra" onerror="this.parentElement.classList.add('is-empty')">
             <svg class="ph-art" viewBox="0 0 160 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#hutArt"/></svg>
           </div>
           <figcaption class="cap"><span>Indenfor</span><span>Plads til at sove</span></figcaption>
@@ -1126,7 +1125,7 @@ form.addEventListener("submit", async e => {
   statusEl.textContent = "Sender …";
 
   try {
-    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(RSVP.to)}`, {
+    const res = await fetch(`https://formsubmit.co/ajax/${RSVP.to}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
@@ -1137,8 +1136,11 @@ form.addEventListener("submit", async e => {
         _captcha: "false"
       })
     });
-    const out = await res.json();
-    if (!res.ok || out.success === "false" || out.success === false) throw new Error(out.message || "Fejl");
+    let out = {};
+    try { out = await res.json(); } catch (e3) {}
+    if (!res.ok || out.success === "false" || out.success === false) {
+      throw new Error(out.message || `Status ${res.status}`);
+    }
     form.reset();
     resetGuests();
     syncAttendance();
@@ -1146,8 +1148,16 @@ form.addEventListener("submit", async e => {
     statusEl.textContent = coming ? "Tak for dit svar. Vi har fået det." : "Tak for beskeden. Vi er kede af, at I ikke kan komme.";
     if (coming) confetti();
   } catch (err) {
+    console.error("Tilmelding fejlede:", err);
+    // Reserve: gæsten kan sende svaret som en almindelig mail, så intet går tabt
+    const body = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join("\n");
+    const mailto = `mailto:${RSVP.to}?cc=${encodeURIComponent(RSVP.cc)}&subject=${encodeURIComponent(`Bryllup: ${coming ? "tilmelding" : "afbud"} fra ${data.Navn}`)}&body=${encodeURIComponent(body)}`;
     statusEl.classList.add("err");
-    statusEl.textContent = "Det lykkedes ikke at sende. Prøv igen om lidt, eller skriv direkte til os.";
+    statusEl.textContent = `Det lykkedes ikke at sende (${err.message}). `;
+    const link = document.createElement("a");
+    link.href = mailto;
+    link.textContent = "Send svaret som e-mail i stedet";
+    statusEl.appendChild(link);
   } finally {
     sendBtn.disabled = false;
   }
