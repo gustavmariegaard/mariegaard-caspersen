@@ -99,7 +99,7 @@
   /* ---------- Hero ---------- */
   .hero { position: relative; overflow: hidden; background: var(--apricot); padding: clamp(5.5rem, 9vw, 7rem) var(--gutter) clamp(5rem, 9vw, 7rem); }
   .hero-in { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
-  .sunw { position: absolute; right: max(-60px, -4vw); top: clamp(1rem, 4vw, 3rem); width: clamp(150px, 30vw, 340px); height: auto; z-index: 0; }
+  .sunw { position: absolute; right: max(-60px, -4vw); top: clamp(1rem, 4vw, 3rem); width: clamp(150px, 30vw, 340px); height: auto; z-index: 0; will-change: transform; }
   .date { margin: 0 0 1.4rem; font-size: .98rem; animation: rise .9s .05s both; }
   .hero h1 { margin: 0; font-size: clamp(3.4rem, 13vw, 9.5rem); line-height: .9; font-weight: 500; letter-spacing: -.045em; }
   .hero h1 span { display: block; animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; }
@@ -139,6 +139,8 @@
 
   /* ---------- Sektioner (farveblokke) ---------- */
   .sec { padding: var(--pad) var(--gutter); background: var(--bg); position: relative; }
+  /* Når scriptet kører, glider baggrunden blødt mellem afsnittenes farver (se "Farveglidning" i scriptet) */
+  .blend .sec, .blend .hero, .blend footer { background: transparent; }
   .c-welcome { --bg: var(--cream); }
   .c-program { --bg: var(--pistachio); }
   .c-menu { --bg: var(--sky); }
@@ -263,6 +265,18 @@
   .tbl ol li.empty span { opacity: .55; }
   .tbl .more { font-size: .92rem; }
 
+  /* Find dit bord */
+  .seat-search { max-width: 520px; margin: 0 0 1.8rem; }
+  .seat-search label { display: block; }
+  .seat-search input { font-size: 1.3rem; }
+  .seat-search input:disabled { opacity: .55; cursor: not-allowed; }
+  .seat-result { min-height: 1.5em; margin: .7rem 0 0; font-weight: 500; }
+  .tbl, .js .tbl.reveal { transition: background .25s, box-shadow .25s, opacity .4s, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .tbl.dim, .js .tbl.reveal.dim { opacity: .35; }
+  .tbl.hit { background: var(--cream); box-shadow: 0 0 0 3px var(--ink); }
+  .seat.hit { background: var(--burnt); }
+  .tbl ol li.hit { background: var(--lemon); font-weight: 600; margin: 0 -.4rem; padding-left: .4rem; padding-right: .4rem; }
+
   /* Tilmelding */
   form { display: grid; gap: 1.5rem; max-width: 640px; position: relative; z-index: 1; }
   .field { display: grid; gap: .4rem; }
@@ -308,7 +322,8 @@
   html:not(.unlocked) body { overflow: hidden; }
   html.unlocked #gate { display: none; }
   #gate {
-    position: fixed; inset: 0; z-index: 100; overflow-x: hidden; overflow-y: auto; background: var(--apricot); color: var(--ink);        display: flex; flex-direction: column; padding: 1.4rem max(var(--gutter), calc((100% - 1100px) / 2)) 1.6rem; transition: opacity .5s ease, visibility .5s;
+    position: fixed; inset: 0; z-index: 100; overflow-x: hidden; overflow-y: auto; background: var(--apricot); color: var(--ink);
+    display: flex; flex-direction: column; padding: 1.4rem max(var(--gutter), calc((100% - 1100px) / 2)) 1.6rem; transition: opacity .5s ease, visibility .5s;
   }
   #gate.leaving { opacity: 0; visibility: hidden; }
   #gate .gate-sun { position: absolute; right: max(-60px, -4vw); top: 10%; width: clamp(160px, 34vw, 380px); height: auto; pointer-events: none; }
@@ -351,6 +366,7 @@
     .guest-row .rm { padding: .6rem .2rem; }
     .alb { padding: 1.2rem; }
     .btn { padding: .9rem 1.4rem; }
+    footer .cap { flex-direction: column; gap: .2rem; }
 
     /* Bordplan: to borde ved siden af hinanden */
     .tables { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
@@ -404,7 +420,7 @@
 
   <form id="gateForm" novalidate>
     <p class="gate-names" id="gateTitle">Gustav<br><i>&amp;</i> Camilla</p>
-    <p class="gate-lede">Skriv adgangskoden fra invitationen for at se mere om program, menu, sted, overnatning, dresscode, toastmaster, bordplan og tilmelding.</p>
+    <p class="gate-lede">Skriv adgangskoden fra invitationen for at se program, menu, bordplan og tilmelding.</p>
 
     <div class="gate-pw">
       <input id="gatePw" type="password" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Adgangskode" aria-label="Adgangskode">
@@ -452,7 +468,7 @@
 </div>
 
 <header class="hero" id="top">
-  <svg class="sunw" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="46" fill="#FFF6EA"/><g stroke="#F6B98F" stroke-width="3"><path d="M0 62H100"/><path d="M0 72H100"/><path d="M0 83H100"/></g></svg>
+  <svg class="sunw" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><defs><mask id="sunCut"><rect width="100" height="100" fill="#fff"/><g stroke="#000" stroke-width="3"><path d="M0 62H100"/><path d="M0 72H100"/><path d="M0 83H100"/></g></mask></defs><circle cx="50" cy="50" r="46" fill="#FFF6EA" mask="url(#sunCut)"/></svg>
 
   <div class="hero-in">
     <p class="date">Lørdag den 24. juli 2027, Aalborg</p>
@@ -696,7 +712,7 @@
       <div class="toast">
         <div class="reveal">
           <h2 class="t">Vil du holde<br>tale?</h2>
-          <p class="lede" style="margin-bottom:1rem">Vores toastmaster er Gustavs bror, Michkel Mariegaard. Vil du holde en tale eller lave et indslag til festen, er du meget velkommen til at kontakte ham.</p>
+          <p class="lede" style="margin-bottom:1rem">Vores toastmaster er Michkel Mariegaard. Vil du holde en tale eller lave et indslag til festen, så kontakt ham.</p>
           <p>Giv ham besked senest <b data-tm="deadline">17. juli 2027</b>, så han kan nå at lægge det ind i aftenens program.</p>
         </div>
 
@@ -704,8 +720,8 @@
           <p class="small">Toastmaster</p>
           <b class="tname">Michkel Mariegaard</b>
           <!-- E-mail, telefon og frist rettes i indstillingerne øverst i scriptet (TOASTMASTER) -->
-          <div class="trow"><span>E-mail</span><a data-tm="email" href="mailto:mikkelmariegaard@gmail.com">mikkelmariegaard@gmail.com</a></div>
-          <div class="trow"><span>Telefon</span><a data-tm="phone" href="tel:+4560889827">+45 60 88 98 27</a></div>
+          <div class="trow"><span>E-mail</span><a data-tm="email" href="mailto:michkel@eksempel.dk">michkel@eksempel.dk</a></div>
+          <div class="trow"><span>Telefon</span><a data-tm="phone" href="tel:+4500000000">+45 00 00 00 00</a></div>
           <div class="trow"><span>Senest</span><b data-tm="deadline">17. juli 2027</b></div>
         </div>
       </div>
@@ -717,6 +733,11 @@
       <p class="lab reveal"><b>07</b> Bordplan</p>
       <h2 class="t reveal">Find din<br>plads</h2>
       <p class="lede reveal">Her kan du se, hvem du skal sidde sammen med til middagen. Bordplanen bliver fyldt ud, når alle har svaret.</p>
+      <div class="seat-search reveal">
+        <label for="seatQ">Find dit bord</label>
+        <input type="text" id="seatQ" placeholder="Skriv dit navn" autocomplete="off" spellcheck="false">
+        <p class="seat-result" id="seatResult" role="status" aria-live="polite"></p>
+      </div>
       <p class="seat-tools reveal"><button type="button" class="linklike" id="toggleAll" aria-expanded="false">Vis alle gæster</button></p>
       <div class="tables" id="tables"></div>
     </div>
@@ -809,13 +830,14 @@ const WEDDING = new Date("2027-07-24T14:00:00+02:00");
 
 // Toastmaster: ret e-mail og telefon her. Fristen er en uge før brylluppet.
 const TOASTMASTER = {
-  email: "mikkelmariegaard@gmail.com",   // <- ret e-mail
-  phone: "+45 60 88 98 27",       // <- ret telefonnummer
+  email: "michkel@eksempel.dk",   // <- ret e-mail
+  phone: "+45 00 00 00 00",       // <- ret telefonnummer
   deadline: "17. juli 2027"       // <- sidste frist for at kontakte ham
 };
 
 // Bordplan: ret navnene i "guests". Tomme pladser vises som "Ledig plads".
 // 6 borde med 8 pladser = 48 gæster.
+// Søgefeltet "Find dit bord" tænder af sig selv, så snart der står navne her.
 const TABLES = [
   { name: "Bord 1", sub: "Brudeparret", seats: 8, guests: [] },
   { name: "Bord 2", sub: "", seats: 8, guests: [] },
@@ -1006,6 +1028,8 @@ document.getElementById("copyBtn").addEventListener("click", async () => {
 (function renderTables() {
   const host = document.getElementById("tables");
   const allBtn = document.getElementById("toggleAll");
+  const rows = [];      // rækkerne i gæstelisten pr. bord
+  const seatEls = [];   // de små pladscirkler pr. bord
 
   TABLES.forEach((t, idx) => {
     const el = document.createElement("article");
@@ -1031,6 +1055,8 @@ document.getElementById("copyBtn").addEventListener("click", async () => {
       <button type="button" class="linklike more" aria-expanded="false" aria-controls="tl-${idx}">Vis gæster</button>
       <div class="tl" id="tl-${idx}"><div class="tl-inner"><ol>${list}</ol></div></div>`;
     host.appendChild(el);
+    rows.push([...el.querySelectorAll(".tl-inner li")]);
+    seatEls.push([...el.querySelectorAll(".seat")]);
   });
 
   const cards = [...host.querySelectorAll(".tbl")];
@@ -1057,8 +1083,108 @@ document.getElementById("copyBtn").addEventListener("click", async () => {
     cards.forEach(c => setOpen(c, open));
     syncAll();
   });
+
+  /* ---------- Find dit bord ---------- */
+  const q = document.getElementById("seatQ");
+  const out = document.getElementById("seatResult");
+  // Små bogstaver og uden accenter, så "Zoe" også finder "Zoë"
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  if (!TABLES.some(t => t.guests.some(Boolean))) {
+    q.disabled = true;
+    q.placeholder = "Bordplanen er ikke klar endnu";
+  }
+  let target = -1;
+  let scrollTimer;
+
+  function search() {
+    cards.forEach(c => c.classList.remove("hit", "dim"));
+    rows.forEach(r => r.forEach(li => li.classList.remove("hit")));
+    seatEls.forEach(r => r.forEach(s => s.classList.remove("hit")));
+    target = -1;
+
+    const text = norm(q.value).trim();
+    if (text.length < 2) { out.textContent = ""; return; }
+    const words = text.split(/\s+/);
+
+    const hits = [];
+    TABLES.forEach((t, ti) => t.guests.forEach((g, gi) => {
+      if (g && words.every(w => norm(g).includes(w))) hits.push({ ti, gi, name: g });
+    }));
+    if (!hits.length) {
+      out.textContent = "Vi kan ikke finde det navn. Prøv dit fornavn eller efternavn.";
+      return;
+    }
+
+    const tables = [...new Set(hits.map(h => h.ti))];
+    cards.forEach((c, i) => {
+      const on = tables.includes(i);
+      c.classList.toggle("hit", on);
+      c.classList.toggle("dim", !on);
+      setOpen(c, on);
+    });
+    hits.forEach(h => { rows[h.ti][h.gi].classList.add("hit"); seatEls[h.ti][h.gi].classList.add("hit"); });
+    syncAll();
+
+    out.textContent = hits.slice(0, 4).map(h => `${h.name}: ${TABLES[h.ti].name}, plads ${h.gi + 1}`).join(" · ")
+      + (hits.length > 4 ? " · …" : "")
+      + (hits.length > 1 ? ". Flere navne passer, så skriv både for- og efternavn." : ".");
+    if (tables.length === 1) target = tables[0];
+  }
+
+  q.addEventListener("input", () => {
+    search();
+    clearTimeout(scrollTimer);
+    // Vent til gæstelisten er foldet ud, og bladr så til bordet
+    scrollTimer = setTimeout(() => {
+      if (target >= 0) cards[target].scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    }, 500);
+  });
 })();
 initReveal();
+
+/* =====================================================
+   Farveglidning mellem afsnit og solen på forsiden
+   Baggrunden glider blødt fra det ene afsnits farve til det næste, mens man scroller,
+   og solen på forsiden stiger langsomt. Slås fra, hvis enheden er sat til "reducer bevægelse".
+   ===================================================== */
+(function scrollColors() {
+  if (reduce) return;
+  const secs = [...document.querySelectorAll("header.hero, main > section, footer")];
+  const parse = c => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+  const cols = secs.map(s => parse(getComputedStyle(s).backgroundColor));
+  if (cols.some(c => c.length < 3)) return;                 // kunne ikke læse farverne: behold de faste blokke
+  const G = 2.2;                                            // mix i lineært lys, så overgangene ikke bliver mudrede
+  const lin = c => c.map(v => Math.pow(v / 255, G));
+  const L = cols.map(lin);
+  const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+  const rgb = l => "rgb(" + l.map(v => Math.round(Math.pow(v, 1 / G) * 255)).join(",") + ")";
+  const hero = document.querySelector(".hero");
+  const sun = document.querySelector(".hero .sunw");
+  let queued = false;
+
+  function update() {
+    queued = false;
+    const H = innerHeight;
+    let cur = L[0];
+    for (let i = 1; i < secs.length; i++) {
+      const y = secs[i].getBoundingClientRect().top;
+      // Overgangen starter, når afsnittet titter frem nede ved bunden, og er færdig, når det er halvvejs oppe.
+      // Bunden af siden er undtagelsen: sidste afsnit når aldrig så højt, så overgangen færdiggøres der, hvor det ender.
+      const end = i === secs.length - 1 ? Math.max(H * 0.4, H - secs[i].offsetHeight) : H * 0.4;
+      let t = Math.min(1, Math.max(0, (H * 0.9 - y) / Math.max(1, H * 0.9 - end)));
+      if (i === 1) t *= Math.min(1, scrollY / (H * 0.25));   // forsiden er ren abrikos, indtil man begynder at scrolle
+      if (t > 0) cur = mix(cur, L[i], t);
+    }
+    document.body.style.backgroundColor = rgb(cur);
+    if (sun) sun.style.transform = `translateY(${-Math.min(scrollY, hero.offsetHeight) * 0.18}px)`;
+  }
+  const request = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+
+  document.documentElement.classList.add("blend");
+  addEventListener("scroll", request, { passive: true });
+  addEventListener("resize", request);
+  update();
+})();
 
 /* =====================================================
    Tilmelding
