@@ -233,8 +233,8 @@
   .seat-tools { margin: 0 0 1.5rem; }
   .linklike { background: none; border: 0; padding: .2rem 0; font: inherit; font-weight: 500; color: var(--ink); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
   .linklike:hover { opacity: .6; }
-  .tables { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); align-items: start; }
-  .tbl { text-align: center; border: 1px solid var(--ink); padding: 1.3rem 1rem 1.1rem; transition: background .25s; }
+  .tables { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+  @media (max-width: 820px) { .tables { grid-template-columns: repeat(2, minmax(0, 1fr)); } }  .tbl { text-align: center; border: 1px solid var(--ink); padding: 1.3rem 1rem 1.1rem; transition: background .25s; }
   @media (hover: hover) { .tbl:hover { background: rgba(255,246,234,.55); } }
   .tbl h3 { font-size: 1.5rem; font-weight: 500; letter-spacing: -.03em; margin: 0; }
   .tbl .sub { font-size: .85rem; margin: 0 0 .7rem; min-height: 1.4em; }
