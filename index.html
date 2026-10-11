@@ -167,11 +167,11 @@
   @keyframes sway { from { rotate: -1.6deg; } to { rotate: 1.6deg; } }
 
   /* ---------- Sektioner ---------- */
-  main > section { position: relative; padding: clamp(3.5rem, 8vw, 6rem) 1.5rem; }
-  main > section + section {
-    border-radius: var(--lap) var(--lap) 0 0; margin-top: calc(var(--lap) * -1);
-    padding-top: calc(clamp(3.5rem, 8vw, 6rem) + var(--lap));
-  }
+  /* Hvert afsnit ligger lidt over det forrige. Bunden får ekstra luft svarende til overlappet,
+     så der er lige meget luft over og under kanten (variant B). */
+  main > section { position: relative; padding: clamp(3.5rem, 8vw, 6rem) 1.5rem calc(clamp(3.5rem, 8vw, 6rem) + var(--lap)); }
+  main > section + section { border-radius: var(--lap) var(--lap) 0 0; margin-top: calc(var(--lap) * -1); }
+  main > section:last-child { padding-bottom: clamp(3.5rem, 8vw, 6rem); }
   .wrap { max-width: 860px; margin: 0 auto; }
   .wrap.wide { max-width: 1100px; }
   h2 {
@@ -190,7 +190,7 @@
   .js .reveal.in { opacity: 1; transform: none; }
 
   /* Velkomst */
-  .s-welcome { background: var(--mist); padding-bottom: calc(clamp(3.5rem, 8vw, 6rem) + var(--lap)); overflow: hidden; }
+  .s-welcome { background: var(--mist); overflow: hidden; }
   .s-welcome h2 { max-width: 16ch; font-size: clamp(2.6rem, 7.5vw, 4.8rem); line-height: 1; }
   .s-welcome h2::after { display: none; }
   .s-welcome .intro { max-width: 54ch; font-size: 1.15rem; color: var(--ink-soft); margin: 0 0 3rem; }
@@ -244,9 +244,6 @@
   .course ul { list-style: none; margin: 0; padding: 0; }
   .course li { padding: .6rem 0; border-top: 1px solid rgba(255,255,255,.15); }
   .course li:last-child { border-bottom: 1px solid rgba(255,255,255,.15); }
-  .menu-foot { margin-top: 3.5rem; display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-  .menu-foot h3 { color: var(--gold); font-weight: 600; font-size: 1rem; }
-  .menu-foot p { margin: 0; color: var(--mist); }
   .soon-badge {
     display: inline-flex; align-items: center; gap: .6rem; margin: 0 0 1.2rem; padding: .45rem 1rem;
     border: 1px solid rgba(231,194,106,.55); border-radius: 999px; background: rgba(231,194,106,.08);
@@ -485,6 +482,7 @@
 
   /* ---------- Mobil ---------- */
   @media (max-width: 600px) {
+    :root { --lap: 28px; }
     .hero { padding: 3.5rem 1rem clamp(8rem, 30vw, 11rem); }
     .hero h1 { font-size: 12.5vw; }
     .name-line { font-size: 4.4vw; }
@@ -821,16 +819,6 @@
         </div>
       </div>
 
-      <div class="menu-foot reveal">
-        <div>
-          <h3>Kaffe og sødt</h3>
-          <p>Serveres sammen med desserten eller lige efter. Bailey og portvin kan fås til kaffen.</p>
-        </div>
-        <div>
-          <h3>Drikkevarer til middagen</h3>
-          <p>Øl, vand, vin og mineralvand i ubegrænsede mængder fra forret til og med dessert.</p>
-        </div>
-      </div>
     </div>
   </section>
 
