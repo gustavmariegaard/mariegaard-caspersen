@@ -308,8 +308,7 @@
   html:not(.unlocked) body { overflow: hidden; }
   html.unlocked #gate { display: none; }
   #gate {
-    position: fixed; inset: 0; z-index: 100; overflow-y: auto; background: var(--apricot); color: var(--ink);
-        display: flex; flex-direction: column; padding: 1.4rem max(var(--gutter), calc((100% - 1100px) / 2)) 1.6rem; transition: opacity .5s ease, visibility .5s;
+    position: fixed; inset: 0; z-index: 100; overflow-x: hidden; overflow-y: auto; background: var(--apricot); color: var(--ink);        display: flex; flex-direction: column; padding: 1.4rem max(var(--gutter), calc((100% - 1100px) / 2)) 1.6rem; transition: opacity .5s ease, visibility .5s;
   }
   #gate.leaving { opacity: 0; visibility: hidden; }
   #gate .gate-sun { position: absolute; right: max(-60px, -4vw); top: 10%; width: clamp(160px, 34vw, 380px); height: auto; pointer-events: none; }
