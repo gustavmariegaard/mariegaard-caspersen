@@ -312,8 +312,6 @@
   }
   #gate.leaving { opacity: 0; visibility: hidden; }
   #gate .gate-sun { position: absolute; right: max(-60px, -4vw); top: 10%; width: clamp(160px, 34vw, 380px); height: auto; pointer-events: none; }
-  #gate .gate-top { display: flex; justify-content: space-between; font-size: .9rem; position: relative; z-index: 1; }
-  #gate .gate-top b { font-weight: 600; }
   #gate form { display: block; width: 100%; max-width: 460px; margin: auto 0; gap: 0; position: relative; z-index: 1; padding: 2rem 0; }
   #gate .gate-names { margin: 0; font-size: clamp(3.2rem, 14vw, 7.5rem); line-height: .9; font-weight: 500; letter-spacing: -.045em; }
   #gate .gate-names i { font-family: var(--serif); font-weight: 400; font-style: italic; color: var(--burnt); letter-spacing: 0; }
@@ -403,7 +401,6 @@
 <!-- Adgangsskærm. Koden ligger i scriptet nederst (PASSWORD). Siden er skjult for søgemaskiner med noindex. -->
 <div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
   <svg class="gate-sun" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="46" fill="#FFF6EA"/><g stroke="#F6B98F" stroke-width="3"><path d="M0 62H100"/><path d="M0 72H100"/><path d="M0 83H100"/></g></svg>
-  <div class="gate-top"><b>G &amp; C</b><span>24. juli 2027</span></div>
 
   <form id="gateForm" novalidate>
     <p class="gate-names" id="gateTitle">Gustav<br><i>&amp;</i> Camilla</p>
