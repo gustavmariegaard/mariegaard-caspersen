@@ -67,7 +67,7 @@
   /* ---------- Navigation (svævende små knapper, inspireret af Barkas) ---------- */
   .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 30; pointer-events: none;
-    padding: calc(.75rem + var(--safe-top)) var(--gutter) 0;
+    padding: calc(.75rem + var(--safe-top)) max(var(--gutter), calc((100% - 1100px) / 2)) 0;
     display: flex; justify-content: space-between; align-items: flex-start; gap: .5rem;
   }
   .nav > * { pointer-events: auto; }
