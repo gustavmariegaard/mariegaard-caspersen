@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 4. nov. 2026 (27): ny palette, bryllup på forsiden, tilmelding via e-mail/sms, ønskesky, frosted glass-knapper, enklere gaveønsker, diskret menu uden logo, tydelig hyttebesked -->
+<!-- VERSION 4. nov. 2026 (33): ny palette, bryllup på forsiden, tilmelding via e-mail/sms, ønskesky, frosted glass-knapper, enklere gaveønsker, diskret menu uden logo, tydelig hyttebesked -->
 <html lang="da">
 <head>
 <meta charset="utf-8">
@@ -163,6 +163,7 @@
   .count b { display: block; font-size: clamp(2.2rem, 7vw, 4.2rem); line-height: 1; font-weight: 500; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
   .count span { font-size: .85rem; }
   .count-label { margin: .8rem 0 0; font-size: .95rem; }
+  .sunw-m { display: none; }
   .hero-waves { position: absolute; left: 0; right: 0; bottom: 14px; width: 100%; height: 40px; z-index: 0; }
 
   /* ---------- Sektioner (farveblokke) ---------- */
@@ -187,6 +188,7 @@
 
   .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
   .js .reveal.in { opacity: 1; transform: none; }
+  .measuring .reveal { transform: none !important; transition: none !important; }
 
   .btn {
     display: inline-block; font: inherit; font-size: .95rem; font-weight: 500; cursor: pointer; text-decoration: none;
@@ -385,7 +387,7 @@
   .rsvp .d-cup1 { right: calc(var(--edge) + clamp(60px, 8vw, 96px) + .6rem); top: 18%; width: clamp(60px, 8vw, 96px); transform: rotate(14deg); }
   .rsvp .d-cup2 { right: var(--edge); top: 20%; width: clamp(60px, 8vw, 96px); transform: rotate(-14deg); }
   .rsvp .d-sp1 { right: calc(var(--edge) + clamp(60px, 8vw, 96px) - 8px); top: calc(18% - 34px); width: 22px; }
-  @media (max-width: 900px) { .sec > .deco:not(.d-keep) { display: none; } }
+  @media (max-width: 900px) { .sec > .deco:not(.d-keep):not(.sky) { display: none; } }   /* store illustrationer skjules, stjernerne bliver */
 
   /* Små stjerner, der glimter rundt omkring på siden (placeres af scriptet i de tomme områder) */
   .sky { width: var(--s, 18px); left: var(--x); top: var(--y); color: rgb(125 2 1 / var(--a, .6)); }
@@ -403,12 +405,20 @@
   @media (max-width: 600px) {
     :root { --gutter: 1.2rem; }
 
-    .hero { padding-top: 8.4rem; }
+    /* Første skærmbillede fylder hele skærmen og slutter ved bølgestregerne */
+    .hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; padding: calc(3.75rem + var(--safe-top)) var(--gutter) 7.6rem; }
+    .hero-in { flex: 1; width: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .hero h1 { font-size: clamp(3.4rem, 17vw, 5.4rem); }
+    .names { margin-top: 1.5rem; }
+    .name-line { font-size: clamp(.82rem, 4vw, 1.25rem); }
+    .count b { font-size: clamp(2.4rem, 10.5vw, 3.2rem); }
+    .scroll-cue { bottom: calc(3.7rem + var(--safe-bottom)); }
     .nav-l { gap: 1.4rem; }
     .cta { min-height: 44px; padding: 0 1rem; }
-    /* Diskokuglen hænger midt mellem menuknappen og Tilmelding */
-    .sunw { --w: 70px; right: calc(50% - 29px); }
-    .hero .h-sp1 { right: 1.6rem; top: 5.6rem; width: 16px; }
+    /* Diskokuglen sidder ude til højre, ud for "til vi siger ja" (følger altså teksten og kan ikke ramme nedtællingen) */
+    .sunw { display: none; }
+    .sunw-m { display: block; position: absolute; right: 0; bottom: -.5rem; width: 64px; height: auto; }
+    .hero .h-sp1 { right: 1.6rem; top: calc(3.75rem + var(--safe-top) + 1rem); bottom: auto; width: 16px; }
     .hero .h-notes, .hero .h-coupe { display: none; }
     .count { display: grid; grid-template-columns: repeat(4, max-content); gap: 1.1rem; }
     .lede { font-size: 1.05rem; margin-bottom: 1.8rem; }
@@ -435,6 +445,12 @@
     .seat { width: 19px; height: 19px; font-size: .6rem; }
     .tbl ol li { font-size: .85rem; }
     .tbl .more { font-size: .85rem; }
+  }
+  @media (max-width: 600px) and (max-height: 690px) {
+    .hero { padding-bottom: 6.6rem; }
+    .hero h1 { font-size: clamp(3.2rem, 15vw, 4.6rem); }
+    .count b { font-size: clamp(2.2rem, 9vw, 2.8rem); }
+    .scroll-cue { bottom: calc(3.1rem + var(--safe-bottom)); }
   }
   @media (max-width: 380px) {
     .btn, #gate .gate-btn { width: 100%; text-align: center; }
@@ -472,6 +488,17 @@
       <g stroke-width="2.1">
         <path d="M50 0V15"/>
         <path d="M43 15H57L55 22H45Z"/>
+        <circle cx="50" cy="68" r="44"/>
+        <path d="M22 34Q50 42 78 34M11 48Q50 58 89 48M6 68Q50 80 94 68M11 88Q50 98 89 88M22 102Q50 108 78 102"/>
+        <path d="M50 24V112M36 27C21 50 21 86 36 109M64 27C79 50 79 86 64 109M22 34C10 55 12 85 22 102M78 34C90 55 88 85 78 102"/>
+        <g fill="currentColor" stroke="none">
+          <path d="M39 44l8-1 1 8-8 1Z"/><path d="M58 58l8-1 1 8-8 1Z"/><path d="M27 70l7-1 1 8-7 1Z"/>
+          <path d="M66 82l7-1 1 7-7 1Z"/><path d="M44 92l8-1 1 7-8 1Z"/><path d="M60 38l6-1 1 6-6 1Z"/>
+        </g>
+      </g>
+    </symbol>
+    <symbol id="ill-ball-free" viewBox="4 22 92 92">
+      <g stroke-width="2.1">
         <circle cx="50" cy="68" r="44"/>
         <path d="M22 34Q50 42 78 34M11 48Q50 58 89 48M6 68Q50 80 94 68M11 88Q50 98 89 88M22 102Q50 108 78 102"/>
         <path d="M50 24V112M36 27C21 50 21 86 36 109M64 27C79 50 79 86 64 109M22 34C10 55 12 85 22 102M78 34C90 55 88 85 78 102"/>
@@ -642,6 +669,7 @@
       <div><b id="cdS">00</b><span>sekunder</span></div>
     </div>
     <p class="count-label" id="countLabel">til vi siger ja</p>
+    <svg class="sunw-m ill" viewBox="0 0 92 92" aria-hidden="true" focusable="false"><use href="#ill-ball-free" width="92" height="92"/></svg>
   </div>
 
   <svg class="hero-waves" viewBox="0 0 160 14" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -1334,6 +1362,7 @@ initReveal();
     };
     sec.querySelectorAll("*").forEach(e => {
       if (e.classList.contains("sky")) return;
+      if (getComputedStyle(e).visibility === "hidden") return;    // skjult tekst (fx lukkede gæstelister) tæller ikke
       const svg = e.closest("svg");
       if (svg && svg !== e) return;                               // indholdet i en tegning tæller ikke for sig
       if (e.matches(BOXES) || (e.children.length === 0 && !svg && !e.textContent.trim())) add(e.getBoundingClientRect());
@@ -1350,6 +1379,7 @@ initReveal();
 
   function build() {
     document.querySelectorAll(".sky").forEach(e => e.remove());
+    document.documentElement.classList.add("measuring");          // slår "glid op"-animationen fra, mens vi måler
     const rand = rng(20270724);
     document.querySelectorAll("header.hero, main > section, footer").forEach(sec => {
       const base = sec.getBoundingClientRect();
@@ -1384,6 +1414,7 @@ initReveal();
         }
       }
     });
+    document.documentElement.classList.remove("measuring");
   }
 
   let timer;
