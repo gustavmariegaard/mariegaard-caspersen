@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 4. nov. 2026 (23): ny palette, bryllup på forsiden, tilmelding via e-mail/sms, ønskesky, frosted glass-knapper, enklere gaveønsker, diskret menu uden logo, tydelig hyttebesked -->
+<!-- VERSION 4. nov. 2026 (27): ny palette, bryllup på forsiden, tilmelding via e-mail/sms, ønskesky, frosted glass-knapper, enklere gaveønsker, diskret menu uden logo, tydelig hyttebesked -->
 <html lang="da">
 <head>
 <meta charset="utf-8">
@@ -112,11 +112,13 @@
 
   /* ---------- Scroll-indikator (kun øverst på forsiden) ---------- */
   .scroll-cue {
-    position: fixed; right: var(--edge); bottom: calc(1.2rem + var(--safe-bottom)); z-index: 20;
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(1.2rem + var(--safe-bottom)); z-index: 20;
     display: flex; flex-direction: column; align-items: center; gap: .6rem; padding: .3rem 0;
     font-size: .8rem; font-weight: 500; letter-spacing: .04em; color: var(--ink); text-decoration: none;
     transition: opacity .35s ease;
   }
+  .scroll-cue.cue-right { left: auto; transform: none; right: var(--edge); }
+  .scroll-cue.cue-hide { visibility: hidden; }
   .scrolled .scroll-cue { opacity: 0; pointer-events: none; }
   .scroll-cue i { position: relative; display: block; width: 1.5px; height: 40px; background: rgba(125,2,1,.25); overflow: hidden; }
   .scroll-cue i::after { content: ""; position: absolute; left: 0; top: -16px; width: 100%; height: 16px; background: var(--ink); animation: cue 1.9s ease-in-out infinite; }
@@ -648,7 +650,7 @@
   </svg>
 </header>
 
-<a class="scroll-cue" href="#velkomst" aria-label="Scroll ned">Scroll ned<i aria-hidden="true"></i></a>
+<a class="scroll-cue" href="#velkomst" aria-label="Scroll ned">Scroll<i aria-hidden="true"></i></a>
 
 <main>
 
@@ -1334,7 +1336,7 @@ initReveal();
       if (e.classList.contains("sky")) return;
       const svg = e.closest("svg");
       if (svg && svg !== e) return;                               // indholdet i en tegning tæller ikke for sig
-      if (e.matches(BOXES) || (e.children.length === 0 && !svg)) add(e.getBoundingClientRect());
+      if (e.matches(BOXES) || (e.children.length === 0 && !svg && !e.textContent.trim())) add(e.getBoundingClientRect());
       e.childNodes.forEach(n => {                                  // hver enkelt tekstlinje
         if (n.nodeType === 3 && n.textContent.trim()) {
           const r = document.createRange();
@@ -1353,6 +1355,10 @@ initReveal();
       const base = sec.getBoundingClientRect();
       const W = base.width, H = base.height;
       const obs = obstacles(sec, base);
+      if (sec.matches("header.hero")) {                           // menuen ligger fast øverst: hold stjernerne væk fra den
+        const nav = document.querySelector(".nav");
+        obs.push({ l: -1e5, t: -1e5, r: 1e5, b: (nav ? nav.offsetHeight : 60) + PAD });
+      }
       const n = Math.max(1, Math.round(H / 300));
       const placed = [];
       for (let i = 0; i < n; i++) {
@@ -1392,6 +1398,55 @@ initReveal();
   }
   const sw = document.getElementById("nameSwitch");
   if (sw) sw.addEventListener("click", () => setTimeout(schedule, 900));   // navnene skifter længde
+})();
+
+/* =====================================================
+   Scroll-indikatoren står i midten, hvis der er plads. Ellers i højre hjørne.
+   Er der hverken plads i midten eller i hjørnet (fx på en høj skærm, hvor næste afsnit allerede kan ses), skjules den.
+   ===================================================== */
+(function cuePlacement() {
+  const cue = document.querySelector(".scroll-cue");
+  const hero = document.querySelector("header.hero");
+  if (!cue || !hero) return;
+  const PAD = 12;
+  function blocked() {
+    const c = cue.getBoundingClientRect();
+    if (!c.width) return false;
+    const hits = r => r.width > 0 && r.height > 0 &&
+      c.left - PAD < r.right && c.right + PAD > r.left && c.top - PAD < r.bottom && c.bottom + PAD > r.top;
+    for (const e of document.querySelectorAll("header.hero *, main *")) {
+      if (e.classList.contains("sky") || e.classList.contains("hero-waves")) continue;      // pynt tæller ikke
+      const svg = e.closest("svg");
+      if (svg && svg !== e) continue;
+      const box = e.getBoundingClientRect();
+      if (box.top > innerHeight + 40 || box.bottom < 0) continue;                              // uden for skærmen
+      if ((e.matches("svg, .switch, .btn, .tile, .map, .alb, .heat") || (e.children.length === 0 && !svg && !e.textContent.trim())) && hits(box)) return true;
+      for (const n of e.childNodes) {
+        if (n.nodeType === 3 && n.textContent.trim()) {
+          const r = document.createRange();
+          r.selectNodeContents(n);
+          if ([...r.getClientRects()].some(hits)) return true;
+        }
+      }
+    }
+    return false;
+  }
+  function place() {
+    if (scrollY > 10) return;                       // vurderes kun øverst på siden
+    cue.classList.remove("cue-right", "cue-hide");
+    if (!blocked()) return;
+    cue.classList.add("cue-right");
+    if (blocked()) cue.classList.add("cue-hide");
+  }
+  let timer;
+  const schedule = () => { clearTimeout(timer); timer = setTimeout(place, 150); };
+  place();
+  addEventListener("load", schedule);
+  addEventListener("resize", schedule);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  if ("ResizeObserver" in window) new ResizeObserver(schedule).observe(hero);
+  const sw = document.getElementById("nameSwitch");
+  if (sw) sw.addEventListener("click", () => setTimeout(schedule, 900));
 })();
 
 /* =====================================================
