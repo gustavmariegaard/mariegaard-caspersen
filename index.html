@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Camilla & Gustav – 24. juli 2027</title>
+<title>Camilla & Gustavs bryllup – 24. juli 2027</title>
 <meta name="description" content="Program, menu, bordplan, overnatning og tilmelding til vores bryllup ved Limfjorden den 24. juli 2027.">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="theme-color" content="#7d0201">
+<meta name="theme-color" content="#efe8d9">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%237d0201'/><g fill='none' stroke='%23efe8d9' stroke-width='5' stroke-linecap='round'><path d='M8 20q6-9 12 0t12 0t12 0t12 0'/><path d='M8 33q6-9 12 0t12 0t12 0t12 0'/><path d='M8 46q6-9 12 0t12 0t12 0t12 0'/></g></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,12 +77,13 @@
   .nav-links { display: flex; gap: .4rem; }
   .chipb {
     display: inline-block; font: inherit; font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-    text-decoration: none; color: var(--ink); background: rgba(239,232,217,.82);
-    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    text-decoration: none; color: var(--ink); background: rgba(251,247,238,.78);
+    box-shadow: inset 0 0 0 1px rgba(125,2,1,.16);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
     border: 0; border-radius: 6px; padding: .6rem .8rem; line-height: 1; white-space: nowrap; cursor: pointer; transition: background .2s;
   }
-  .chipb:hover { background: rgba(246,241,227,.97); }
-  .logo, .logo:hover { background: var(--ink); color: var(--cream); font-weight: 700; letter-spacing: .08em; }
+  .chipb:hover { background: rgba(253,250,243,.96); }
+  .logo, .logo:hover { background: var(--ink); color: var(--cream); font-weight: 700; letter-spacing: .08em; box-shadow: none; }
   .logo:hover { opacity: .85; }
   .only-m { display: none; }
   .sheet {
@@ -326,32 +327,32 @@
   html:not(.unlocked) body { overflow: hidden; }
   html.unlocked #gate { display: none; }
   #gate {
-    position: fixed; inset: 0; z-index: 100; overflow-x: hidden; overflow-y: auto; background: var(--red); color: var(--cream);
+    position: fixed; inset: 0; z-index: 100; overflow-x: hidden; overflow-y: auto; background: var(--cream); color: var(--ink);
     display: flex; flex-direction: column; padding: 1.4rem max(var(--gutter), calc((100% - 1100px) / 2)) 1.6rem; transition: opacity .5s ease, visibility .5s;
   }
   #gate.leaving { opacity: 0; visibility: hidden; }
   #gate .gate-sun { position: absolute; right: clamp(1rem, 9vw, 9rem); top: 0; width: clamp(110px, 24vw, 280px); height: auto; pointer-events: none; }
-  #gate .ill { color: var(--cream); }
-  #gate :focus-visible { outline-color: var(--cream); }
+  #gate .ill { color: var(--ink); }
+  #gate :focus-visible { outline-color: var(--ink); }
   #gate .gate-coupe { position: absolute; right: clamp(1rem, 11vw, 11rem); bottom: 16%; width: clamp(64px, 8vw, 100px); height: auto; transform: rotate(-8deg); pointer-events: none; }
   #gate .gate-notes { position: absolute; right: calc(clamp(1rem, 11vw, 11rem) + clamp(64px, 8vw, 100px) + 1.6rem); bottom: 22%; width: clamp(30px, 4vw, 50px); height: auto; transform: rotate(8deg); pointer-events: none; }
   #gate .gate-sp1 { position: absolute; right: calc(clamp(1rem, 9vw, 9rem) + clamp(110px, 24vw, 280px) + 1rem); top: 16%; width: 24px; height: auto; pointer-events: none; }
   #gate .gate-sp2 { position: absolute; right: 5vw; top: 40%; width: 16px; height: auto; pointer-events: none; animation-delay: -1.4s; }
   #gate form { display: block; width: 100%; max-width: 460px; margin: auto 0; gap: 0; position: relative; z-index: 1; padding: 2rem 0; }
   #gate .gate-names { margin: 0; font-size: clamp(3.2rem, 14vw, 7.5rem); line-height: .9; font-weight: 500; letter-spacing: -.045em; }
-  #gate .gate-names i { font-family: var(--serif); font-weight: 400; font-style: italic; color: var(--blush); letter-spacing: 0; }
+  #gate .gate-names i { font-family: var(--serif); font-weight: 400; font-style: italic; color: var(--tomato); letter-spacing: 0; }
   #gate .gate-lede { margin: 1.4rem 0 .6rem; max-width: 34ch; }
   #gate .gate-pw { position: relative; margin-bottom: 1rem; }
-  #gate .gate-pw input { width: 100%; font: inherit; font-size: 16px; color: var(--cream); background: transparent; border: 0; border-bottom: 1.5px solid var(--cream); border-radius: 0; padding: 1rem 3rem 1rem 0; outline: 0; }
-  #gate .gate-pw input::placeholder { color: rgba(239,232,217,.65); }
-  #gate .gate-pw input:focus { box-shadow: 0 2px 0 var(--cream); }
-  #gate .gate-eye { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 0; cursor: pointer; color: var(--cream); }
+  #gate .gate-pw input { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: transparent; border: 0; border-bottom: 1.5px solid var(--ink); border-radius: 0; padding: 1rem 3rem 1rem 0; outline: 0; }
+  #gate .gate-pw input::placeholder { color: rgba(125,2,1,.5); }
+  #gate .gate-pw input:focus { box-shadow: 0 2px 0 var(--ink); }
+  #gate .gate-eye { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 0; cursor: pointer; color: var(--ink); }
   #gate .gate-eye svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   #gate .gate-remember { display: flex; align-items: center; gap: .6rem; margin: 0 0 1.4rem; font-size: .92rem; font-weight: 400; cursor: pointer; }
-  #gate .gate-remember input { width: 1.05rem; height: 1.05rem; accent-color: var(--cream); }
-  #gate .gate-btn { font: inherit; font-weight: 500; font-size: 1rem; cursor: pointer; padding: .9rem 1.8rem; border: 1px solid var(--cream); border-radius: 6px; background: var(--cream); color: var(--red); transition: background .2s, color .2s; }
-  #gate .gate-btn:hover { background: transparent; color: var(--cream); }
-  #gate .gate-error { margin: 1rem 0 0; font-weight: 500; color: var(--blush); }
+  #gate .gate-remember input { width: 1.05rem; height: 1.05rem; accent-color: var(--ink); }
+  #gate .gate-btn { font: inherit; font-weight: 500; font-size: 1rem; cursor: pointer; padding: .9rem 1.8rem; border: 1px solid var(--ink); border-radius: 6px; background: var(--ink); color: var(--cream); transition: background .2s, color .2s; }
+  #gate .gate-btn:hover { background: transparent; color: var(--ink); }
+  #gate .gate-error { margin: 1rem 0 0; font-weight: 500; color: var(--tomato); }
   #gate .gate-foot { display: flex; justify-content: space-between; font-size: .85rem; position: relative; z-index: 1; }
 
   /* ---------- Illustrationer (tegnet i samme stil som invitationen) ---------- */
@@ -392,10 +393,10 @@
   @media (max-width: 600px) {
     :root { --gutter: 1.2rem; }
 
-    .hero { padding-top: 5rem; }
+    .hero { padding-top: 6.4rem; }
     /* Diskokuglen hænger mellem de to menuknapper i toppen */
     .sunw { width: 72px; right: 8.6rem; }
-    .hero .h-sp1 { right: 3.6rem; top: 6.4rem; width: 16px; }
+    .hero .h-sp1 { right: 1.6rem; top: 4.8rem; width: 16px; }
     .hero .h-notes, .hero .h-coupe { display: none; }
     .count { display: grid; grid-template-columns: repeat(4, max-content); gap: 1.1rem; }
     .lede { font-size: 1.05rem; margin-bottom: 1.8rem; }
@@ -545,7 +546,7 @@
 
   <form id="gateForm" novalidate>
     <p class="gate-names" id="gateTitle">Camilla<br><i>&amp;</i> Gustav</p>
-    <p class="gate-lede">Skriv adgangskoden fra invitationen for at se program, menu, bordplan og tilmelding.</p>
+    <p class="gate-lede">Velkommen til vores bryllup. Skriv adgangskoden fra invitationen for at se program, menu, bordplan og tilmelding.</p>
 
     <div class="gate-pw">
       <input id="gatePw" type="password" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Adgangskode" aria-label="Adgangskode">
@@ -600,7 +601,7 @@
   <svg class="ill deco h-coupe" viewBox="0 0 60 104" aria-hidden="true" focusable="false"><use href="#ill-coupe"/></svg>
 
   <div class="hero-in">
-    <p class="date">Lørdag den 24. juli 2027</p>
+    <p class="date">Vi inviterer til bryllup lørdag den 24. juli 2027</p>
 
     <h1><span>Camilla</span><span><i>&amp;</i> Gustav</span></h1>
 
